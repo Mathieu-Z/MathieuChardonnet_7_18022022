@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const sauceRoutes = require('./routes/sauce');
+const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
 const path = require('path');
 
@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URL,
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
-const Sauce = require('./models/sauce');
+const Post = require('./models/post');
 
 app.use(express.json());
 
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/sauces', sauceRoutes);
+app.use('/api/posts', postRoutes);
 app.use('/api/auth', userRoutes);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
