@@ -1,0 +1,14 @@
+.App {
+  text-align: center;
+  &-logo{
+    width: 30%;
+    height: auto;
+    margin: auto;
+    padding: 2%;
+    img{
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+

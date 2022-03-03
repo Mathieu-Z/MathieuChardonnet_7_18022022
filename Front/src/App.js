@@ -1,14 +1,19 @@
-import logo from './Logos/icon-left-font-monochrome-black.png';
-import './App.css';
+import React from 'react';
+import './App.scss';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import Login from './pages/Login';
+import Post from './pages/Post';
+import Profil from './pages/Profil'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route exact path="/" element={<Post />} />
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/profil" element={<Profil />} />
+      </Routes>
+    </Router>
   );
 }
 
