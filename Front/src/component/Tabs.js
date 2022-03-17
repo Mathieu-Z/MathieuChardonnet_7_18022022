@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
-import { Tab } from '@headlessui/react'
-import Login from "../component/Login"
-import Signup from "../component/Signup"
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import React from 'react';
+import { Tab } from '@headlessui/react';
+import Login from "../component/Login";
+import Signup from "../component/Signup";
+import classNames from "../component/Classnames";
 
 export default function PanelChoice() {
-  const tabNames = ["Se connecter", "Créer un compte"]
+  const tabNames = ["Se connecter", "Créer un compte"];
 
   return (
     <div className="">

@@ -42,3 +42,39 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(500).json({ error }));
 };
+
+//modifier mdp (PUT)
+exports.modifyPassword = (req, res, next) => {
+  User.findOne({ token: req.body.token })
+  .then(user => {
+    if (!user) {
+      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+    }
+    bcrypt.compare(req.body.password, user.password)
+    .then(valid => {
+      if (!valid) {
+        return res.status(401).json({ error: 'Mot de passe incorrect !' });
+      }
+      bcrypt.hash(req.body.password, 10)
+      .then(hash => {
+        User.updateOne({_password: hash}, { ...User, _id: user.id })
+        .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
+        .catch(error => res.status(400).json({ error }))
+        );
+      });      
+    },
+});
+
+//supprimer le compte (DELETE)
+exports.deleteAccount = async (req, res) => {
+  try {
+    const user = User.findOne({ token: req.body.token })
+    .then(user => {
+      await user.destroy();
+    });
+
+    return res.status(204).json({message: 'Votre compte a bien été supprimé'});
+  } catch (error) {
+    return res.status(500).json({error});
+  }
+};

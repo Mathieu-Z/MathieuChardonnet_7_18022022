@@ -34,7 +34,6 @@ exports.modifyPost = (req, res, next) => {
   Post.updateOne({_id: req.params.id}, { ...postObject, _id: req.params.id })
     .then(() => res.status(201).json({message: 'Post modifiée !'}))
     .catch(error => res.status(400).json({ error }));
-
 };
 
 // suppression d'une post (DELETE)

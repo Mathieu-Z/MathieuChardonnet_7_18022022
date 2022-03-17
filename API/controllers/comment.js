@@ -1,4 +1,4 @@
-
+const Remark = require('../models/comment');
 
 //creation Commentaire (POST)
 exports.createRemark = (req, res, next) => {
@@ -10,21 +10,14 @@ exports.createRemark = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-// trouve toutes les posts (GET)
+// trouve tous les commentaires (GET)
 exports.getAllRemarks = (req, res, next) => {
   Remark.find()
     .then(remarks => {res.status(200).json(remarks)})
     .catch(error => {res.status(400).json({ error })})
 };
 
-// trouve une post selon sont id (GET)
-exports.getOneRemark = (req, res, next) => {
-  Remark.findOne({ _id: req.params.id })
-    .then(remark => {res.status(200).json(remark)})
-    .catch(error => {res.status(404).json({ error })});
-};
-
-// suppression d'une post (DELETE)
+// suppression d'un commentaire (DELETE)
 exports.deleteRemark = (req, res, next) => {
   Remark.findOne({ _id: req.params.id })
     .then(remark => {
