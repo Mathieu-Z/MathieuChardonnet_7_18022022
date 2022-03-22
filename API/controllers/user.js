@@ -60,10 +60,10 @@ exports.modifyPassword = (req, res, next) => {
         User.updateOne({_password: hash}, { ...User, _id: user.id })
         .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
         .catch(error => res.status(400).json({ error }))
-        );
-      });      
-    },
-});
+      });
+    });      
+  });
+};
 
 //supprimer le compte (DELETE)
 exports.deleteAccount = async (req, res) => {
