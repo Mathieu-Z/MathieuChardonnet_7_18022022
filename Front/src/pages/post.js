@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Header from '../component/Header';
 
 /*
 necessite liste des post, trier du plus recent au plus vieux,
@@ -13,7 +14,8 @@ class Post extends Component{
   render(){
     return(
       <div>
-
+        <Header />
+        
       </div>
     )
   }

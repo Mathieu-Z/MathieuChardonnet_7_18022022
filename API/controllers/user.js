@@ -65,6 +65,12 @@ exports.modifyPassword = (req, res, next) => {
   });
 };
 
+//deconnexion
+exports.logout = (req, res) => {
+  res.clearCookie("jwt");
+  res.status(200).json("OUT");
+};
+
 //supprimer le compte (DELETE)
 exports.deleteAccount = async (req, res) => {
   try {

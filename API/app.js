@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const commentRoutes = require('./routes/comment');
 const path = require('path');
 
 require('dotenv').config()
@@ -23,8 +24,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/posts', postRoutes);
+app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/api/comment', commentRoutes);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
