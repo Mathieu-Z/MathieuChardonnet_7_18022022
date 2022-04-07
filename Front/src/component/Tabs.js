@@ -7,9 +7,9 @@ export default function PanelChoice() {
 
   return (
     <div className="">
-      <div className="">
-        {/*<FormLogin />*/}
-      </div>
+      {/*<div className="">
+        <FormLogin />
+      </div>*/}
       <div className="">
         <FormSignup />
       </div>

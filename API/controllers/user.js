@@ -76,7 +76,7 @@ exports.deleteAccount = async (req, res) => {
   try {
     const user = User.findOne({ token: req.body.token })
     .then(user => {
-      await user.destroy();
+      user.destroy();
     });
 
     return res.status(204).json({message: 'Votre compte a bien été supprimé'});
