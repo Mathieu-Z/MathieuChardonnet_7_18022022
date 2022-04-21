@@ -66,6 +66,23 @@ exports.modifyPassword = (req, res, next) => {
   });
 };
 
+//modifier pseudo (PUT)
+exports.modifyPseudo = (req, res, next) => {
+  User.findOne({ token: req.body.token })
+  .then(user => {
+    if (!user) {
+      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+    }
+    return{
+    .then( => {
+      User.updateOne({_pseudo: req.params.pseudo}, { ...User, _id: user.id })
+      .then(() => res.status(201).json({message: 'Pseudo modifié !'}))
+      .catch(error => res.status(400).json({ error }))
+    });
+  }
+  });      
+};
+
 //deconnexion
 exports.logout = (req, res) => {
   res.clearCookie("jwt");

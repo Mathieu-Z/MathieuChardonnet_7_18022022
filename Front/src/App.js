@@ -13,7 +13,7 @@ function App() {
         <Route exact path="/" element={<Home />} />
         <Route exact path='/home' element={<Home />} />
         <Route exact path="/login" element={<Login />} />
-        <Route exact path="/Signup" element={<Signup />} />
+        <Route exact path="/signup" element={<Signup />} />
         <Route exact path="/profil" element={<Profil />} />
         <Route exact path='*' element={<h1>Page not found, error 404 !</h1>} />
       </Routes>

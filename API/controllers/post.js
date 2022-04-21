@@ -36,7 +36,7 @@ exports.modifyPost = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-// suppression d'une post (DELETE)
+// suppression d'un post (DELETE)
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then(post => {

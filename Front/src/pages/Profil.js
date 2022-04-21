@@ -1,18 +1,15 @@
-import React, {Component} from 'react';
+import React from "react";
+import Header from "../component/Header";
+import ModifyProfil from "../component/Profil/ModifyProfil";
 
+function Profil() {
+    return (
+        <div>
+            <Header />
+            <div className="toolbar"></div>
+            <ModifyProfil />
+        </div>
+    );
+};
 
-class Profil extends Component{
-  constructor(props){
-    super(props)
-  }
-  
-  render(){
-    return(
-      <div>
-  
-      </div>
-    )
-  }
-}
-  
-  export default Profil
+export default Profil; 

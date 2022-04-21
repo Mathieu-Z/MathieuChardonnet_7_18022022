@@ -1,4 +1,4 @@
-const Remark = require('../models/comment');
+const Remark = require('../model mongo/comment');
 
 //creation Commentaire (POST)
 exports.createRemark = (req, res, next) => {

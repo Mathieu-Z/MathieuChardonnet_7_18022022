@@ -1,14 +1,19 @@
 import React from 'react';
 import Header from '../component/Header';
+//import Feed from "../component/Feed";
+import './Home.scss'
 
 function Post() {
 
-  return(
+  return (
     <div>
       <Header />
-      
+        <div className="toolbar"></div>
+        <main className="main">
+          
+        </main>
     </div>
-  )
-}
+  );
+};
 
 export default Post

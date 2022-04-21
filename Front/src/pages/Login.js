@@ -44,7 +44,7 @@ export default function FormLogin() {
       localStorage.setItem("Token", token)
       localStorage.setItem("user", user)
       localStorage.getItem("user", user, "token", token)
-      navigate("/Home")    
+      navigate("/home")    
     }
   };
 

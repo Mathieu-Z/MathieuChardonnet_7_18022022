@@ -1,5 +1,4 @@
 const { Model, DataTypes, DATE } = require("sequelize");
-const { now } = require("sequelize/types/utils");
 
 class Comment extends Model {
   static init(sequelize) {
@@ -12,7 +11,7 @@ class Comment extends Model {
       },
       userId: {type: DataTypes.INTEGER, allowNull: false},
       content: {type: DataTypes.STRING, allowNull: false},
-      date: {type: DataTypes.DATE, defaultValue: now},
+      date: {type: DataTypes.DATE},
       likes: {type: DataTypes.NUMBER, defaultValue: 0 },
       dislikes: {type: DataTypes.NUMBER, defaultValue: 0 },
       usersLiked: {type: DataTypes.ARRAY },
