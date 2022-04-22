@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useForm } from "react-hook-form"
+import './LogSign.scss';
+import { useForm } from "react-hook-form";
 import { POST } from '../component/Api/Axios';
 import ENDPOINTS from '../component/Api/Endpoints';
 import Logo from '../component/Logo';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 
 function SignUp() {

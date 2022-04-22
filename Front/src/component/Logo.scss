@@ -1,0 +1,14 @@
+@import '../color.scss';
+
+.logo{
+  margin-top: 2%;
+  padding: 1%;
+
+  &-img{
+    width: 450px;
+
+    @media (max-width: 799px){
+      width: 300px;
+    }
+  }
+}

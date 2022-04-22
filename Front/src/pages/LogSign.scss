@@ -1,0 +1,37 @@
+@import '../color.scss';
+
+.container{
+  text-align: center;
+}
+
+label{
+  font-size: medium;
+}
+
+input{
+  width: 250px;
+  height: 25px;
+  margin: 1.5%;
+  font-size: medium;
+
+  @media (max-width: 799px){
+    margin: 5%;
+  }
+}
+
+a{
+  color: $text-color;
+  &:hover{
+    color: $secondary-color;
+  }
+}
+
+.button {
+  width: 250px;
+  height: 40px;
+  margin: 1.5%;
+  border: 0;
+  border-radius: 10px 10px 10px 10px;
+  color: $text-color;
+  background-color: $secondary-color;
+}

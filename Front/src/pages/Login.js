@@ -1,11 +1,11 @@
 import React from 'react';
+import './LogSign.scss';
 import { useState, useEffect } from 'react';
 import { POST } from '../component/Api/Axios';
 import ENDPOINTS from '../component/Api/Endpoints';
 import Logo from '../component/Logo';
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
-
 import { useNavigate } from "react-router-dom";
 
 
@@ -88,7 +88,7 @@ export default function FormLogin() {
           <span className="error-message">{errorData}</span>
         </form>
         <div className="pos-form">
-          <Link to = "/signup" style={{textDecoration:"none"}}><p>Pas encore de compte?</p></Link>
+          <Link to = "/signup" style={{textDecoration:"none"}}><p>Pas encore de compte ?</p></Link>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../Logos/icon-left-font-monochrome-black.png';
+import logo from '../Logos/icon-left-font-monochrome-white.svg';
 import './Logo.scss'
 
 export default function Logo() {
