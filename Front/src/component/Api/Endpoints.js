@@ -2,13 +2,14 @@ const endpoints = {
   // CRUD posts
   GET_ALL_POSTS: "/api/post",
   CREATE_POST: "/api/post",
+  DELETE_POST: "/api/post/:id",
 
   // Like & unlike post
   LIKE_UNLINKE: "/api/post/:id/likeunlike",
 
   // CRUD comments
   GET_ALL_COMMENTS: "/api/comment",
-  CREATE_COMMENT: "/api/comment/:id/",
+  CREATE_COMMENT: "/api/comment/:id",
 
   // Auth
   USER_SIGNUP: "/api/auth/signup",

@@ -10,7 +10,7 @@ function Post() {
       <Header />
         <div className="toolbar"></div>
         <main className="main">
-          
+          {/*<Feed />*/}
         </main>
     </div>
   );

@@ -68,20 +68,29 @@ exports.modifyPassword = (req, res, next) => {
 
 //modifier pseudo (PUT)
 exports.modifyPseudo = (req, res, next) => {
-  User.findOne({ token: req.body.token })
-  .then(user => {
-    if (!user) {
-      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
+  try {
+    const user = User.findOne({ id: req.params.id })
+    console.log("User trouvé : ", user.dataValues)
+    if (req.body.pseudo) {
+      user.pseudo = req.body.pseudo
+      console.log("Ancien pseudo : ", user.pseudo)
     }
-    return{
-    .then( => {
-      User.updateOne({_pseudo: req.params.pseudo}, { ...User, _id: user.id })
-      .then(() => res.status(201).json({message: 'Pseudo modifié !'}))
-      .catch(error => res.status(400).json({ error }))
-    });
+    try {
+      user.save({})
+      console.log("New userInfo : ", user)
+      res.status(200).json({
+        user: user,
+        messageRetour: "Votre profil a bien été modifié",
+      })
+    } catch (error) {
+      return res
+        .status(500)
+        .send({ error: "Erreur lors de la mise à jour de votre profil" })
+    }
+  } catch (error) {
+    return res.status(500).send({ error: "Erreur serveur" })
   }
-  });      
-};
+}
 
 //deconnexion
 exports.logout = (req, res) => {
@@ -92,7 +101,7 @@ exports.logout = (req, res) => {
 //supprimer le compte (DELETE)
 exports.deleteAccount = async (req, res) => {
   try {
-    const user = User.findOne({ token: req.body.token })
+    User.findOne({ token: req.body.token })
     .then(user => {
       user.destroy();
     });
