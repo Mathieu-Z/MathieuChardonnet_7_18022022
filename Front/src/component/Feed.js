@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { GET } from '../component/Api/Axios';
 import { DELETE } from '../component/Api/Axios';
 import ENDPOINTS from '../component/Api/Endpoints';
+import '../component/Post/PostCreate'
+import '../component/Post/PostFeed'
 
 function Feed() {
   const [posts, setPosts] = useState([])

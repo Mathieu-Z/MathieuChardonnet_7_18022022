@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
-const configDB = require('../config/db');
+const configDB = require('../config/config');
 
-const User = require('../models/model mongo/user');
-const Post = require('../models/model mongo/post');
-const Comment = require('../models/model mongo/comment');
+const User = require('../models/user');
+const Post = require('../models/posts');
+const Comment = require('../models/comments');
+const Like = require('../models/likes');
 
 const connectionDB = new Sequelize(configDB);
 console.log('connecté à la base de donnée!')
@@ -11,10 +12,11 @@ console.log('connecté à la base de donnée!')
 User.init(connectionDB);
 Post.init(connectionDB);
 Comment.init(connectionDB);
-Likes.init(connectionDB);
+Like.init(connectionDB);
 
-Post.belongsTo(User, {foreignKey: 'user_id'});
-Comment.belongsTo(User, {foreignKey: 'user_id'}); 
-Comment.belongsTo(Post, {foreignKey: 'post_id'});
+Post.belongsTo(User, {foreignKey: 'users_id'});
+Comment.belongsTo(User, {foreignKey: 'users_id'}); 
+Comment.belongsTo(Post, {foreignKey: 'posts_id'});
+
 
 module.exports = connectionDB;
