@@ -3,14 +3,15 @@ import { useState, useEffect } from "react";
 import { GET } from '../component/Api/Axios';
 import { DELETE } from '../component/Api/Axios';
 import ENDPOINTS from '../component/Api/Endpoints';
-import '../component/Post/PostCreate'
-import '../component/Post/PostFeed'
+import PostCreate from '../component/Post/PostCreate';
+import PostFeed from '../component/Post/PostFeed'
 
 function Feed() {
   const [posts, setPosts] = useState([])
   const Token = localStorage.getItem("Token")
   const user = localStorage.getItem('user')
   const userId = JSON.parse(user).id
+  const [errorData, setErrorData] = useState("")
 
   async function loadPosts() {
     const resPost = GET(ENDPOINTS.GET_ALL_POSTS, {
@@ -27,10 +28,10 @@ function Feed() {
   }
 
   useEffect(() => {
-      loadPosts()
+    loadPosts()
   }, [Token, setPosts, userId])
   const addnewpost = () => {
-      window.location.reload()
+    window.location.reload()
   }
 
   function deletePost(id) {
@@ -56,7 +57,7 @@ function Feed() {
     <main className="main">
       <div className="feed">
         <div className='post'>
-          <PostCard addPost={addnewpost}></PostCard>
+          <PostCreate addPost={addnewpost}></PostCreate>
         </div>
         <h1> Nouvelles publications:</h1>
 

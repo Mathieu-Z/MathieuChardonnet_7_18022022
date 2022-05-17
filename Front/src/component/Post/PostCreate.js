@@ -14,6 +14,7 @@ function PostCreate(props) {
   } = useForm()
 
   const [emptyMessage, setEmptyMesssage] = useState(null)
+  const [errorData, setErrorData] = useState("")
 
   const onSubmit = async content => {
     if (content.text_content) {
@@ -34,7 +35,6 @@ function PostCreate(props) {
       setErrorData("Post créé!")
     }
   }
-  
 
 
   return (

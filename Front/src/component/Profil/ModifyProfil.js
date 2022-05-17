@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import DeleteProfil from "./DeleteProfil";
 import { PUT } from '../Api/Axios';
@@ -10,6 +10,19 @@ function ModifyProfil() {
 
   const navigate = useNavigate()
   const [errorData, setErrorData] = useState("")
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm()
+
+  const [infoUser, setInfoUser] = useState({
+    pseudo: "",
+    email: "",
+    password: ""
+  })
+
 
   const onSubmit = data => {
     
@@ -57,8 +70,8 @@ function ModifyProfil() {
             className="form-input"
             {...register("pseudo", {
               minLength: {
-                value: 2,
-                message: "Il faut que votre pseudo ait au moins 2 lettres!",
+                value: 3,
+                message: "Il faut que votre pseudo ait au moins 3 lettres!",
               },
               maxLength: {
                 value: 30,
@@ -69,20 +82,23 @@ function ModifyProfil() {
           {errors.pseudo && <span>{errors.pseudo.message}</span>}
           <br />
 
-    {/*email*/}
-          <label htmlFor="email" className="email-label">
-            Email:
+    {/*password*/}
+          <label htmlFor="password" className="password-label">
+            Mot de passe:
           </label>
           <br />
           <input
             className="form-input"
-            defaultValue={infoUser.email}
-            type="email"
-            {...register("email", {
-              message: "Vous devez entrer une adresse mail valide",
+            defaultValue={infoUser.password}
+            type="password"
+            {...register("password", {
+              pattern: {
+                value: /^((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#$%^&*]).{6,64})$/,
+                message: "Vous devez entrer un mot de passe valide. Votre mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial",
+              },
             })}
           />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.password && <span>{errors.password.message}</span>}
           <br />
 
           <input

@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 
 // Créer un compte
 exports.signup = (req, res, next) => {
+  console.log (req, res, next)
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({

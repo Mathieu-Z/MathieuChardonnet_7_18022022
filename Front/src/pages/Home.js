@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../component/Header';
-//import Feed from "../component/Feed";
+import Feed from "../component/Feed";
 import './Home.scss'
 
 function Post() {
@@ -10,7 +10,7 @@ function Post() {
       <Header />
         <div className="toolbar"></div>
         <main className="main">
-          {/*<Feed />*/}
+          <Feed />
         </main>
     </div>
   );

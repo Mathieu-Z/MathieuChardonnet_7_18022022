@@ -1,0 +1,19 @@
+.container{
+  text-align: center;
+}
+
+header{
+  display: flex;
+  .toolbar{
+    display: flex;
+    align-items: center;
+    .logo_home{
+      .logo{
+        padding: 0;
+        img{
+          width: 300px;
+        }
+      }
+    }
+  }
+}

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react"
-import NewComment from "../commentaires/NewComment";
-//import dayjs from 'dayjs';
+import NewComment from "../Commentaires/NewComment";
+import dayjs from 'dayjs';
 import { DELETE } from '../Api/Axios';
+import { POST } from '../Api/Axios';
+import { GET } from '../Api/Axios';
 import ENDPOINTS from '../Api/Endpoints';
 
 // Gérer l'heure de posts avec DAYJS
@@ -31,23 +33,40 @@ function PostFeed({ post, deletePost }) {
   const userAdmin = user.admin
 
   // get comments
-  async function loadComments() {
-    try {
-      const { data } = await api.get(`/comments?id=${post.id}`)
-      setDataComment(data)
-      setshowComments(data.length > 0)
-    } catch (error) {
+  function loadComments() {
+    const resComments = GET(ENDPOINTS.GET_ALL_COMMENTS, {
+      
+    })
+    if (resComments.status === 400) {
+      setErrorData("Commentaires non chargés!");
+    }
+    if (resComments.status === 200) {
+      setErrorData("Commentaires chargés!")
     }
   }
   useEffect(() => {
     loadComments();
       if (post.users_id === userId || userAdmin) {
         setDeleteIconTrash(true)
-      }       
+      }
   }, []);
 
+  /*async function loadComments() {
+    try {
+      const { data } = await api.get(`/comments?id=${post.id}`)
+      setDataComment(data)
+      setshowComments(data.length > 0)
+    } catch (error) {
+    }
+  }*/
+
   // like Posts
-  const likeHandle = async data => {
+  function likeHandle() {
+
+  }
+
+
+  /*const likeHandle = async data => {
     try {
       const response = await api.get(`/likes/${post.id}/like/${userId}`)
         await api.post("/likes", {
@@ -60,15 +79,20 @@ function PostFeed({ post, deletePost }) {
     } catch (error) {
       console.log(error.message)
     }
-  }
+  }*/
+
   // get likes
-  async function loadLikes() {
+  function loadLikes() {
+
+  }
+
+  /*async function loadLikes() {
     try {
       const { data } = await api.get(`/likes/posts/${post.id}`)
       setShowLikes(data.length)
     } catch (error) {
     }
-  }
+  }*/
 
   useEffect(() => {
     loadLikes();

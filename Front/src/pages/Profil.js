@@ -1,10 +1,11 @@
 import React from "react";
 import Header from "../component/Header";
 import ModifyProfil from "../component/Profil/ModifyProfil";
+import "./Profil.scss"
 
 function Profil() {
     return (
-        <div>
+        <div className="container">
             <Header />
             <div className="toolbar"></div>
             <ModifyProfil />

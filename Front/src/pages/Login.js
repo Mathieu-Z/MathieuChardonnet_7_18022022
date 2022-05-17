@@ -56,6 +56,7 @@ export default function FormLogin() {
           <h4>Login</h4>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="connect-form">
+          
           {/* email */}
           <label htmlFor="email">Email:</label>
           <br />
@@ -77,7 +78,7 @@ export default function FormLogin() {
               {...register("password", {
                 required: true,
                   pattern: {
-                    value: /^((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{6,64})$/,
+                    value: /^((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#$%^&*]).{6,64})$/,
                     message: "Vous devez entrer un mot de passe valide. Votre mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial",
                   },
               })}
