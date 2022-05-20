@@ -7,7 +7,7 @@ import { GET } from '../Api/Axios';
 import ENDPOINTS from '../Api/Endpoints';
 
 // Gérer l'heure de posts avec DAYJS
-require("dayjs/locale/fr")
+require("dayjs/locale/fr.js")
 const relativeTime = require("dayjs/plugin/relativeTime")
 dayjs.extend(relativeTime)
 
@@ -16,6 +16,7 @@ function PostFeed({ post, deletePost }) {
   const [dataComment, setDataComment] = useState([])
   const [showComments, setshowComments] = useState(false)
   const [showLikes, setShowLikes] = useState(false)
+  const [errorData, setErrorData] = useState("")
 
   const addComment = newComment => {
     setDataComment(prevState => {
@@ -35,7 +36,7 @@ function PostFeed({ post, deletePost }) {
   // get comments
   function loadComments() {
     const resComments = GET(ENDPOINTS.GET_ALL_COMMENTS, {
-      
+      content: data.content
     })
     if (resComments.status === 400) {
       setErrorData("Commentaires non chargés!");
@@ -51,53 +52,36 @@ function PostFeed({ post, deletePost }) {
       }
   }, []);
 
-  /*async function loadComments() {
-    try {
-      const { data } = await api.get(`/comments?id=${post.id}`)
-      setDataComment(data)
-      setshowComments(data.length > 0)
-    } catch (error) {
-    }
-  }*/
-
   // like Posts
   function likeHandle() {
+    const res = GET(ENDPOINTS.LIKE_UNLINKE, {
 
-  }
-
-
-  /*const likeHandle = async data => {
-    try {
-      const response = await api.get(`/likes/${post.id}/like/${userId}`)
-        await api.post("/likes", {
-          users_id: userId,
-          posts_id: post.id,
-          like: !response.data
-        })
-      const countLikes = !response.data ? showLikes + 1 : showLikes - 1;
-      setShowLikes(countLikes)
-    } catch (error) {
-      console.log(error.message)
+    })
+    if (res.status === 404) {
+      setErrorData("Likes pas fonctionnel!")
     }
-  }*/
+    if (res.status === 200) {
+      setErrorData("Likes!")
+    }
+  }
 
   // get likes
   function loadLikes() {
+    const resLikes = GET(ENDPOINTS.GET_LIKES , {
 
-  }
-
-  /*async function loadLikes() {
-    try {
-      const { data } = await api.get(`/likes/posts/${post.id}`)
-      setShowLikes(data.length)
-    } catch (error) {
+    })
+    if (resLikes.status === 404) {
+      setErrorData("Likes non chargés!")
     }
-  }*/
-
+    if (resLikes.status === 200) {
+      setErrorData("Likes chargés!")
+      setShowLikes(data.length)
+    }
+  }
   useEffect(() => {
     loadLikes();
   }, [])
-  
+
   return (
     <div>
       <div className="card-feed">

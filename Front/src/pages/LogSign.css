@@ -1,0 +1,40 @@
+.container {
+  text-align: center;
+}
+
+label {
+  font-size: medium;
+}
+
+input {
+  width: 250px;
+  height: 25px;
+  margin: 1.5%;
+  font-size: medium;
+}
+@media (max-width: 799px) {
+  input {
+    margin: 5%;
+  }
+}
+
+span {
+  display: block;
+}
+
+a {
+  color: white;
+}
+a:hover {
+  color: #d1515a;
+}
+
+.button {
+  width: 250px;
+  height: 40px;
+  margin: 1.5%;
+  border: 0;
+  border-radius: 10px 10px 10px 10px;
+  color: white;
+  background-color: #d1515a;
+}/*# sourceMappingURL=LogSign.css.map */

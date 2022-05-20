@@ -5,7 +5,8 @@ const endpoints = {
   DELETE_POST: "/api/post/:id",
 
   // Like & unlike post
-  LIKE_UNLINKE: "/api/post/:id/likeunlike",
+  LIKE_UNLINKE: "/api/:idPost/like/:id",
+  GET_LIKES: "api/posts/:id",
 
   // CRUD comments
   GET_ALL_COMMENTS: "/api/comment",

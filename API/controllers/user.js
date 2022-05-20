@@ -3,27 +3,52 @@ const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Créer un compte
-exports.signup = (req, res, next) => {
-  console.log (req, res, next)
+/*exports.signup = (req, res, next) => {
+  console.log (req)
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
         pseudo: req.body.pseudo,
         email: req.body.email,
-        password: hash
+        password: "hash"
       });
       user.save()
         .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
         .catch(error => res.status(400).json({ error }));
     })
   .catch(error => res.status(500).json({ error }));
+};*/
+
+exports.signup = async (req, res, next) => {
+  const hash = await bcrypt.hash(req.body.password, 10)
+  userInfo = {
+    pseudo: req.body.pseudo,
+    email: req.body.email,
+    password: hash,
+  }
+  console.log("user prêt à être créé", userInfo)  
+  try {
+    const user = await User.create(userInfo)
+    console.log("Utilisateur créé !", userInfo)
+    res.status(200).json({
+      id: user.id,
+      pseudo: user.pseudo,
+      email: user.email,
+      token: jwt.sign({ userId: user.id }, `secretToken`, {
+        expiresIn: "24h",
+      }),
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send({ error: "Erreur serveur" })
+  }
 };
 
 // Connexion à un compte
-exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+exports.login = async (req, res, next) => {
+  const user = await User.findOne( {where: { email: req.body.email }})
     .then(user => {
-      if (!user) {
+      if (!user == null) {
         return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
       bcrypt.compare(req.body.password, user.password)
@@ -46,8 +71,8 @@ exports.login = (req, res, next) => {
 };
 
 //modifier mdp (PUT)
-exports.modifyPassword = (req, res, next) => {
-  User.findOne({ token: req.body.token })
+exports.modifyPassword = async (req, res, next) => {
+  const user =  await User.findOne({ where: { token: req.body.token }})
   .then(user => {
     if (!user) {
       return res.status(401).json({ error: 'Utilisateur non trouvé !' });

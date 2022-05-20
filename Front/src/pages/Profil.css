@@ -1,0 +1,17 @@
+.container {
+  text-align: center;
+}
+
+header {
+  display: flex;
+}
+header .toolbar {
+  display: flex;
+  align-items: center;
+}
+header .toolbar .logo_home .logo {
+  padding: 0;
+}
+header .toolbar .logo_home .logo img {
+  width: 300px;
+}/*# sourceMappingURL=Profil.css.map */
