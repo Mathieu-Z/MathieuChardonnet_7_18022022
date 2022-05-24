@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react"
 import NewComment from "../Commentaires/NewComment";
+import Comments from "../Commentaires/Comment";
 import dayjs from 'dayjs';
-import { DELETE } from '../Api/Axios';
-import { POST } from '../Api/Axios';
 import { GET } from '../Api/Axios';
 import ENDPOINTS from '../Api/Endpoints';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import MessageIcon from '@mui/icons-material/Message';
 
 // Gérer l'heure de posts avec DAYJS
 require("dayjs/locale/fr.js")
@@ -13,10 +15,11 @@ dayjs.extend(relativeTime)
 
 function PostFeed({ post, deletePost }) {
 
+  const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
   const [dataComment, setDataComment] = useState([])
   const [showComments, setshowComments] = useState(false)
   const [showLikes, setShowLikes] = useState(false)
-  const [errorData, setErrorData] = useState("")
+  const [data, setErrorData] = useState("")
 
   const addComment = newComment => {
     setDataComment(prevState => {

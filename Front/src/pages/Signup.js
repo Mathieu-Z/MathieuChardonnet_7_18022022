@@ -32,6 +32,8 @@ function SignUp() {
       setErrorData("Vous êtes déjà inscrit à cette adresse mail, connectez-vous !");
     }
     if (response.status === 201) {
+      //le navigate ne prend pas
+      setErrorData("Compte créé")
       navigate("/login")
     }
   };
@@ -91,6 +93,7 @@ function SignUp() {
           <br />
 
           <input type="submit" value="Inscription" className="button" />
+
           <span className="error-message">{errorData}</span>{" "}
         </form>
       </div>

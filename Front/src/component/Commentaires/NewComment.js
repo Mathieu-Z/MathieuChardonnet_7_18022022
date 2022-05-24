@@ -2,7 +2,7 @@ import React from "react"
 import { useState } from "react"
 import { PUT } from '../Api/Axios';
 import ENDPOINTS from "../Api/Endpoints";
-
+import SendIcon from '@mui/icons-material/Send';
 
 function NewComment({ posts_id, newComment }) {
   const [commentMessage, setCommentMessage] = useState("");
@@ -38,7 +38,7 @@ function NewComment({ posts_id, newComment }) {
           id="input-comment"
         />
         {setSendButton && (
-          <S className="send-icon" onClick={onSubmit} />
+          <SendIcon className="send-icon" onClick={onSubmit} />
         )}
       </form>
     </div>

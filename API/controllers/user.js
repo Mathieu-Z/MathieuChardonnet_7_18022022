@@ -3,22 +3,6 @@ const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
 
 // Créer un compte
-/*exports.signup = (req, res, next) => {
-  console.log (req)
-  bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      const user = new User({
-        pseudo: req.body.pseudo,
-        email: req.body.email,
-        password: "hash"
-      });
-      user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ error }));
-    })
-  .catch(error => res.status(500).json({ error }));
-};*/
-
 exports.signup = async (req, res, next) => {
   const hash = await bcrypt.hash(req.body.password, 10)
   userInfo = {
@@ -93,9 +77,9 @@ exports.modifyPassword = async (req, res, next) => {
 };
 
 //modifier pseudo (PUT)
-exports.modifyPseudo = (req, res, next) => {
+exports.modifyPseudo = async (req, res, next) => {
   try {
-    const user = User.findOne({ id: req.params.id })
+    const user = await User.findOne({ id: req.params.id })
     console.log("User trouvé : ", user.dataValues)
     if (req.body.pseudo) {
       user.pseudo = req.body.pseudo
@@ -127,7 +111,7 @@ exports.logout = (req, res) => {
 //supprimer le compte (DELETE)
 exports.deleteAccount = async (req, res) => {
   try {
-    User.findOne({ token: req.body.token })
+    const user = await User.findOne({ token: req.body.token })
     .then(user => {
       user.destroy();
     });

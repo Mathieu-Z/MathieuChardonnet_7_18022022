@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { DELETE } from "../Api/Axios";
 import ENDPOINTS from "../Api/Endpoints";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function DeleteProfil() {
 
@@ -24,7 +25,7 @@ function DeleteProfil() {
   }
 
   return (
-    <div className="supprimer-compte">Supprimer compte<onClick {...() => {
+    <div className="supprimer-compte">Supprimer compte<DeleteIcon onClick {...() => {
       if (window.confirm("Voulez-êtes sûr de vouloir supprimer votre profi?")) {
         deleteHandle()
       }
