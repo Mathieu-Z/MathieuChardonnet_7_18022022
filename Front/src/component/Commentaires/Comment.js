@@ -37,16 +37,6 @@ function Comments({ comments, commentDelete }) {
     }
   }
 
-  // Delete comment
-  /*async function deleteComment(id) {
-    try {
-      const data = await api.delete(`/comments/${id}`);
-      commentDelete(data);
-      window.location.reload()
-    } catch (error) {
-    }
-  }*/
-
   return (
     <div className="card-comments">
       <div className="card-comments-header">

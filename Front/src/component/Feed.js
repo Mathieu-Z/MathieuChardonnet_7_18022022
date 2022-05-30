@@ -11,13 +11,13 @@ function Feed() {
   const Token = localStorage.getItem("Token")
   const user = localStorage.getItem('user')
   const userId = JSON.parse(user).id
-  const [errorData, setErrorData] = useState("")
+  const [data, setErrorData] = useState("")
 
   async function loadPosts() {
     const resPost = GET(ENDPOINTS.GET_ALL_POSTS, {
       userId: userId,
-      postId: postId,
-      content: commentMessage,
+      postId: data.postId,
+      content: data.commentMessage,
     })
     if (resPost.status === 400) {
       setErrorData("Posts non trouvés!")

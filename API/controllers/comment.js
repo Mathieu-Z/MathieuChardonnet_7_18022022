@@ -1,7 +1,7 @@
 const Remark = require('../models/comments');
 
 //creation Commentaire (POST)
-exports.createRemark = (req, res, next) => {
+exports.createRemark = async (req, res, next) => {
   const remarkObject = JSON.parse(req.body.post);
   delete remarkObject._id;
   const remark = new post ({...remarkObject, imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`});
@@ -11,15 +11,15 @@ exports.createRemark = (req, res, next) => {
 };
 
 // trouve tous les commentaires (GET)
-exports.getAllRemarks = (req, res, next) => {
-  Remark.find()
+exports.getAllRemarks = async (req, res, next) => {
+  await Remark.find()
     .then(remarks => {res.status(200).json(remarks)})
     .catch(error => {res.status(400).json({ error })})
 };
 
 // suppression d'un commentaire (DELETE)
-exports.deleteRemark = (req, res, next) => {
-  Remark.findOne({ _id: req.params.id })
+exports.deleteRemark = async (req, res, next) => {
+  await Remark.findOne({ _id: req.params.id })
     .then(remark => {
       const filename = remark.imageUrl.split('/images/')[1];
       fs.unlink(`ìmages/${filename}`, () => {
