@@ -13,13 +13,13 @@ exports.createLike = async (req, res, next) => {
       if (!post) {
         return res.status(404).json({ error: "Post introuvable !" });
       } else if (isliked) {
-        await Like.create({ users_id: userId, posts_id: postId })
+        Like.create({ users_id: userId, posts_id: postId })
           .then((like) => {
             res.status(201).json({ message: "Post liké" })
           })
           .catch((error) => res.status(400).json({ error }));
       } else if (!isliked) {
-        await Like.destroy({
+        Like.destroy({
           where: {
             users_id: userId,
             posts_id: postId,

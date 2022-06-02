@@ -23,19 +23,22 @@ function SignUp() {
 
   const onSubmit = data => {
     //axios
-    const response = POST(ENDPOINTS.USER_SIGNUP, {
+    POST(ENDPOINTS.USER_SIGNUP, {
       pseudo: data.pseudo,
       email: data.email,
       password: data.password
+    })
+    .then (response => {
+      if (response.status === 400) {
+        setErrorData("Vous êtes déjà inscrit à cette adresse mail, connectez-vous !");
+      }
+      if (response.status === 201) {
+        setErrorData("Compte créé")
+        navigate("/login")
+      }
+    })
+    .catch (error => {
     });
-    if (response.status === 400) {
-      setErrorData("Vous êtes déjà inscrit à cette adresse mail, connectez-vous !");
-    }
-    if (response.status === 201) {
-      //le navigate ne prend pas
-      setErrorData("Compte créé")
-      navigate("/login")
-    }
   };
 
   return (

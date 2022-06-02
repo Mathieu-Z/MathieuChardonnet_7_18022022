@@ -25,16 +25,20 @@ function Comments({ comments, commentDelete }) {
   }, [userId, userAdmin])
 
   async function deleteComment() {
-    const response = DELETE(ENDPOINTS.DELETE_POST, {
+    DELETE(ENDPOINTS.DELETE_POST, {
       content: data.content
     })
-    if (response.status === 400) {
-      setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
-    }
-    if (response.status === 200) {
-      (window.confirm("Votre commentaire à bien été supprimé!"))
-      window.location.reload()
-    }
+    .then (response => {
+      if (response.status === 400) {
+        setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
+      }
+      if (response.status === 200) {
+        (window.confirm("Votre commentaire à bien été supprimé!"))
+        window.location.reload()
+      }
+    })
+    .catch (error => {
+    });
   }
 
   return (

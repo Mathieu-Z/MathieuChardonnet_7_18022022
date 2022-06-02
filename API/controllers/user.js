@@ -68,7 +68,7 @@ exports.modifyPassword = async (req, res, next) => {
       }
       bcrypt.hash(req.body.password, 10)
       .then(hash => {
-        await User.updateOne({_password: hash}, { ...User, _id: user.id })
+        User.updateOne({_password: hash}, { ...User, _id: user.id })
         .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
         .catch(error => res.status(400).json({ error }))
       });

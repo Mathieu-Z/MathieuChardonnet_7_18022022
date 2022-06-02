@@ -14,17 +14,21 @@ function Feed() {
   const [data, setErrorData] = useState("")
 
   async function loadPosts() {
-    const resPost = GET(ENDPOINTS.GET_ALL_POSTS, {
+    GET(ENDPOINTS.GET_ALL_POSTS, {
       userId: userId,
       postId: data.postId,
       content: data.commentMessage,
     })
-    if (resPost.status === 400) {
-      setErrorData("Posts non trouvés!")
-    }
-    if (resPost.status === 200) {
-      setErrorData("Posts trouvés!")
-    }
+    .then (resPost => {
+      if (resPost.status === 400) {
+        setErrorData("Posts non trouvés!")
+      }
+      if (resPost.status === 200) {
+        setErrorData("Posts trouvés!")
+      }
+    })
+    .catch (error => {
+    });
   }
 
   useEffect(() => {
@@ -36,21 +40,25 @@ function Feed() {
 
   function deletePost(id) {
     const data = posts.filter(post => post.id != id);
-    const resDelete = DELETE(ENDPOINTS.DELETE_POST, {
+    DELETE(ENDPOINTS.DELETE_POST, {
       userId: data.userId,
       postId: data.postId,
       content: data.commentMessage,
     })
-    if (resDelete.status === 500) {
-      setErrorData("Post non trouvé!");
-    }
-    if (resDelete.status === 400) {
-      setErrorData("Post non supprimé!");
-    }
-    if (resDelete.status === 200) {
-      setErrorData("Post supprimé!");
-      window.location.reload()
-    }
+    .then (resDelete => {
+      if (resDelete.status === 500) {
+        setErrorData("Post non trouvé!");
+      }
+      if (resDelete.status === 400) {
+        setErrorData("Post non supprimé!");
+      }
+      if (resDelete.status === 200) {
+        setErrorData("Post supprimé!");
+        window.location.reload()
+      }
+    })
+    .catch (error => {
+    });
   }
 
   return (

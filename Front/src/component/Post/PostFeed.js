@@ -38,15 +38,19 @@ function PostFeed({ post, deletePost }) {
 
   // get comments
   function loadComments() {
-    const resComments = GET(ENDPOINTS.GET_ALL_COMMENTS, {
+    GET(ENDPOINTS.GET_ALL_COMMENTS, {
       content: data.content
     })
-    if (resComments.status === 400) {
-      setErrorData("Commentaires non chargés!");
-    }
-    if (resComments.status === 200) {
-      setErrorData("Commentaires chargés!")
-    }
+    .then (resComments => {
+      if (resComments.status === 400) {
+        setErrorData("Commentaires non chargés!");
+      }
+      if (resComments.status === 200) {
+        setErrorData("Commentaires chargés!")
+      }
+    })
+    .catch (error => {
+    })
   }
   useEffect(() => {
     loadComments();
@@ -57,30 +61,37 @@ function PostFeed({ post, deletePost }) {
 
   // like Posts
   function likeHandle() {
-    const res = GET(ENDPOINTS.LIKE_UNLINKE, {
-
+    GET(ENDPOINTS.LIKE_UNLINKE, {
     })
-    if (res.status === 404) {
-      setErrorData("Likes pas fonctionnel!")
-    }
-    if (res.status === 200) {
-      setErrorData("Likes!")
-    }
+    .then (res => {
+      if (res.status === 404) {
+        setErrorData("Likes pas fonctionnel!")
+      }
+      if (res.status === 200) {
+        setErrorData("Likes!")
+      }
+    })
+    .catch (error => {
+    })
   }
 
   // get likes
   function loadLikes() {
-    const resLikes = GET(ENDPOINTS.GET_LIKES , {
-
+    GET(ENDPOINTS.GET_LIKES , {
     })
-    if (resLikes.status === 404) {
-      setErrorData("Likes non chargés!")
-    }
-    if (resLikes.status === 200) {
-      setErrorData("Likes chargés!")
-      setShowLikes(data.length)
-    }
+    .then (resLikes => {
+      if (resLikes.status === 404) {
+        setErrorData("Likes non chargés!")
+      }
+      if (resLikes.status === 200) {
+        setErrorData("Likes chargés!")
+        setShowLikes(data.length)
+      }
+    })
+    .catch (error => {
+    })
   }
+  
   useEffect(() => {
     loadLikes();
   }, [])

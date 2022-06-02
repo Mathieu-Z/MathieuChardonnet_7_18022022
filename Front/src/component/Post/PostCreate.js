@@ -23,17 +23,21 @@ function PostCreate(props) {
       data = { users_id: user_id, text_content: content.text_content }
     }
     // POST
-    const resPost = POST(ENDPOINTS.CREATE_POST, {
-      userId: userId,
-      postId: postId,
-      content: commentMessage,
+    POST(ENDPOINTS.CREATE_POST, {
+      userId: data.userId,
+      postId: data.postId,
+      content: data.commentMessage,
     })
-    if (resPost.status === 400) {
-      setErrorData("Post non créé!")
-    }
-    if (resPost.status === 201) {
-      setErrorData("Post créé!")
-    }
+    .then (response => {
+      if (response.status === 400) {
+        setErrorData("Post non créé!")
+      }
+      if (response.status === 201) {
+        setErrorData("Post créé!")
+      }
+    })
+    .catch (error => {
+    });
   }
 
 

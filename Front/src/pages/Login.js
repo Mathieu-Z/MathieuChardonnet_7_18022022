@@ -29,48 +29,27 @@ export default function FormLogin() {
   },[])
 
   const onSubmit = data => {
-    //axios
-    /*const response = POST(ENDPOINTS.USER_LOGIN, {
+
+    POST(ENDPOINTS.USER_LOGIN, {
       email: data.email,
       password: data.password
+    })
+    .then (response => {
+      if (response.status === 401) {
+        setErrorData("Vous n'êtes pas inscrit!");
+      }
+      if (response.status === 200) {
+        let token = response.data.token
+        let user = JSON.stringify(response.data)
+        console.log(token + user)
+        localStorage.setItem("Token", token)
+        localStorage.setItem("user", user)
+        localStorage.getItem("user", user, "token", token)
+        navigate("/home")
+      }
+    })
+    .catch (error => {
     });
-    if (response.status === 401) {
-      setErrorData("Vous n'êtes pas inscrit!");
-    }
-    if (response.status === 200) {
-      let token = response.data.token
-      let user = JSON.stringify(response.data)
-      console.log(token + user)
-      localStorage.setItem("Token", token)
-      localStorage.setItem("user", user)
-      localStorage.getItem("user", user, "token", token)
-      //navigate ne fonctionne pas
-      navigate("/home")
-    }
-  };*/
-
-  POST(ENDPOINTS.USER_LOGIN, {
-    email: data.email,
-    password: data.password
-  })
-  .then (response => {
-    if (response.status === 401) {
-      setErrorData("Vous n'êtes pas inscrit!");
-    }
-    if (response.status === 200) {
-      let token = response.data.token
-      let user = JSON.stringify(response.data)
-      console.log(token + user)
-      localStorage.setItem("Token", token)
-      localStorage.setItem("user", user)
-      localStorage.getItem("user", user, "token", token)
-      //navigate ne fonctionne pas
-      navigate("/home")
-    }
-  })
-  .catch (error => {
-
-  });
   }
 
   return (
