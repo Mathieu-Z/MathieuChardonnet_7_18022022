@@ -21,10 +21,16 @@ function Header() {
         <div className="logo_home">
           <Link to="/home"><Logo /></Link>
         </div>
-        <div className="flex-items-header">
-          <Link to="/profil"><AccountCircleIcon /></Link>
-          <span className='logout'>Logout</span>
-          <Link to="/sign-in"><ExitToAppIcon className='icon-logout' /></Link>
+        <div className="link">
+          <Link to="/profil" className='link_profil'>
+            <AccountCircleIcon className='link_profil_icon'/>
+            <p className='link_profil_text'>Profil</p>
+          </Link>
+
+          <Link to="/login" className='link_logout'>
+            <ExitToAppIcon className='link_logout_icon' />
+            <p className='link_logout_text'>Logout</p>
+          </Link>
         </div>
       </div>
     </header>

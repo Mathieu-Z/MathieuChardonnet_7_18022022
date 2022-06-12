@@ -1,2 +1,51 @@
 @import '../color.scss';
 
+@mixin link_action {
+  display: flex;
+  align-items: center;
+  width: 100px;
+  p{
+    margin: 10%;
+  }
+}
+
+.link{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  @media (max-width: 799px) {
+    justify-content: center;
+  }
+  &_profil{
+    @include link_action()
+  }
+  &_logout{
+    @include link_action()
+  }
+}
+
+.header{
+  display: block;
+  margin: 1%;
+  .toolbar{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: flex-start;
+    align-items: stretch;
+    @media (max-width: 799px) {
+      grid-template-columns: auto;
+      grid-template-rows: 1fr 1fr;
+      justify-content: center;
+    }
+    .logo{
+      text-align: start;
+      margin-top: 0;
+    }
+  }
+}
+
+h1{
+  @media (max-width: 799px) {
+    font-size: 1.75em;
+  }
+}

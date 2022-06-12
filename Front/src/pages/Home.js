@@ -6,7 +6,7 @@ import './Home.scss'
 function Post() {
 
   return (
-    <div>
+    <div className="container">
       <Header />
         <div className="toolbar"></div>
         <main className="main">

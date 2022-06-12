@@ -22,7 +22,6 @@ function SignUp() {
   const navigate = useNavigate()
 
   const onSubmit = data => {
-    //axios
     POST(ENDPOINTS.USER_SIGNUP, {
       pseudo: data.pseudo,
       email: data.email,
@@ -32,7 +31,7 @@ function SignUp() {
       if (response.status === 400) {
         setErrorData("Vous êtes déjà inscrit à cette adresse mail, connectez-vous !");
       }
-      if (response.status === 201) {
+      if (response.status === 200) {
         setErrorData("Compte créé")
         navigate("/login")
       }
@@ -40,7 +39,7 @@ function SignUp() {
     .catch (error => {
     });
   };
-
+  
   return (
     <div className="container">
       <Logo />

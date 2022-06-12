@@ -93,7 +93,7 @@ export default function FormLogin() {
           <span className="error-message">{errorData}</span>
         </form>
         <div className="pos-form">
-          <Link to = "/signup" style={{textDecoration:"none"}}><p>Pas encore de compte ?</p></Link>
+          <Link to = "/signup" style={{textDecoration:"none"}}>Pas encore de compte ?</Link>
         </div>
       </div>
     </div>

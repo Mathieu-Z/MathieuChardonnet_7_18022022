@@ -1,7 +1,7 @@
 const endpoints = {
   // CRUD posts
-  GET_ALL_POSTS: "/api/post",
-  CREATE_POST: "/api/post",
+  GET_ALL_POSTS: "/api/post/",
+  CREATE_POST: "/api/post/create/",
   DELETE_POST: "/api/post/:id",
 
   // Like & unlike post

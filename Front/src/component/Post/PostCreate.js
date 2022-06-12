@@ -14,17 +14,18 @@ function PostCreate(props) {
   } = useForm()
 
   const [emptyMessage, setEmptyMesssage] = useState(null)
-  const [errorData, setErrorData] = useState("")
+  const [ , setErrorData] = useState("")
 
   const onSubmit = async content => {
+    const data = { users_id: users_id, text_content: content.text_content };
     if (content.text_content) {
       setEmptyMesssage(false)
     } else {
-      data = { users_id: user_id, text_content: content.text_content }
+      data = data
     }
     // POST
     POST(ENDPOINTS.CREATE_POST, {
-      userId: data.userId,
+      userId: data.users_id,
       postId: data.postId,
       content: data.commentMessage,
     })
@@ -53,7 +54,7 @@ function PostCreate(props) {
               minLength: {
                 value: 10,
                 message:
-                  "Vous devez créer un post de 10 caractères au minimum !",
+                  "Vous devez créer un post de 10 caractères minimum !",
               },
               maxLength: {
                 value: 500,
@@ -63,8 +64,8 @@ function PostCreate(props) {
           />
           {errors.text_content && <span className='error-msg'>{errors.text_content.message}</span>}
         </div>
-        <div className="button">
-          <input className="button-post" type="submit" value="Publier" />
+        <div className="button-container">
+          <input className="button" type="submit" value="Publier" />
         </div>
 
         <div className="message-post">

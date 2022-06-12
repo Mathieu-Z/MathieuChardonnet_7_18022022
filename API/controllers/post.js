@@ -24,8 +24,8 @@ exports.getAllPosts = async (req, res, next) => {
       },
     ],
   })
+  .then(posts => {res.status(200).json(posts)})
 };
-  
 
 // trouve une post selon sont id (GET)
 exports.getOnePost = async (req, res, next) => {

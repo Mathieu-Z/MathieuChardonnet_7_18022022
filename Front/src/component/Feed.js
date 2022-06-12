@@ -39,7 +39,7 @@ function Feed() {
   }
 
   function deletePost(id) {
-    const data = posts.filter(post => post.id != id);
+    const data = posts.filter(post => post.id !== id);
     DELETE(ENDPOINTS.DELETE_POST, {
       userId: data.userId,
       postId: data.postId,

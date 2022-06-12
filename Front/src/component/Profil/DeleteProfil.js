@@ -11,17 +11,21 @@ function DeleteProfil() {
 
   const deleteHandle = () => {
 
-    const response = DELETE(ENDPOINTS.DELETE_USER, {
+    DELETE(ENDPOINTS.DELETE_USER, {
       userId: data.userId
     })
-    if (response.status === 500) {
-      setErrorData("Vous n'êtes pas inscrit!");
-    }
-    if (response.status === 204) {
-      localStorage.clear();
-      (window.confirm("Votre compte a bien été supprimée!"))
-      navigate("/signup")
-    }
+    .then (response => {
+      if (response.status === 500) {
+        setErrorData("Vous n'êtes pas inscrit!");
+      }
+      if (response.status === 204) {
+        localStorage.clear();
+        (window.confirm("Votre compte a bien été supprimée!"))
+        navigate("/signup")
+      }
+    })
+    .catch (error => {
+    });
   }
 
   return (

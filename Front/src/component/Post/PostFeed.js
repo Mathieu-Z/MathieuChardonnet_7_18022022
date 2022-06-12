@@ -57,7 +57,7 @@ function PostFeed({ post, deletePost }) {
       if (post.users_id === userId || userAdmin) {
         setDeleteIconTrash(true)
       }
-  }, []);
+  },);
 
   // like Posts
   function likeHandle() {
@@ -94,7 +94,7 @@ function PostFeed({ post, deletePost }) {
   
   useEffect(() => {
     loadLikes();
-  }, [])
+  },)
 
   return (
     <div>

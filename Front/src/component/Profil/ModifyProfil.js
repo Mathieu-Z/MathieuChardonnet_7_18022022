@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 function ModifyProfil() {
 
   const navigate = useNavigate()
-  const [errorData, setErrorData] = useState("")
+  const [ , setErrorData] = useState("")
 
   const {
     register,
@@ -17,7 +17,7 @@ function ModifyProfil() {
     formState: { errors },
   } = useForm()
 
-  const [infoUser, setInfoUser] = useState({
+  const [infoUser] = useState({
     pseudo: "",
     email: "",
     password: ""
@@ -26,30 +26,38 @@ function ModifyProfil() {
 
   const onSubmit = data => {
     
-    const respassword = PUT(ENDPOINTS.UPDATE_PASSWORD, {
+    PUT(ENDPOINTS.UPDATE_PASSWORD, {
       password: data.password,
     })
-    if (respassword.status === 500) {
-      setErrorData("Vous n'êtes pas inscrit!");
-    }
-    if (respassword.status === 204) {
-      localStorage.clear();
-      (window.confirm("Votre mot de passe a bien été modifié !"))
-      navigate("/profil")
-    }
+    .then (respassword => {
+      if (respassword.status === 500) {
+        setErrorData("Vous n'êtes pas inscrit!");
+      }
+      if (respassword.status === 204) {
+        localStorage.clear();
+        (window.confirm("Votre mot de passe a bien été modifié !"))
+        navigate("/profil")
+      }
+    })
+    .catch (error => {
+    });
 
     
-    const respseudo = PUT(ENDPOINTS.UPDATE_PSEUDO, {
+    PUT(ENDPOINTS.UPDATE_PSEUDO, {
       pseudo: data.pseudo,
     })
-    if (respseudo.status === 500) {
-      setErrorData("Vous n'êtes pas inscrit!");
-    }
-    if (respseudo.status === 204) {
-      localStorage.clear();
-      (window.confirm("Votre pseudo a bien été modifé !"))
-      navigate("/profil")
-    }
+    .then (respseudo => {
+      if (respseudo.status === 500) {
+        setErrorData("Vous n'êtes pas inscrit!");
+      }
+      if (respseudo.status === 204) {
+        localStorage.clear();
+        (window.confirm("Votre pseudo a bien été modifé !"))
+        navigate("/profil")
+      }
+    })
+    .catch (error => {
+    });
 
   }
 
@@ -62,7 +70,7 @@ function ModifyProfil() {
           </label>
           <br />
 
-    {/*pseudo*/}
+         {/*pseudo*/}
           <input
             type="text"
             defaultValue={infoUser.pseudo}
@@ -82,7 +90,17 @@ function ModifyProfil() {
           {errors.pseudo && <span>{errors.pseudo.message}</span>}
           <br />
 
-    {/*password*/}
+          <input
+            className="button-profil"
+            type="submit"
+            value="Modifier pseudo"
+          />
+        </div>
+      </form>
+
+      <form className="form">
+        <div className="form-profil">
+         {/*password*/}
           <label htmlFor="password" className="password-label">
             Mot de passe:
           </label>
@@ -104,7 +122,7 @@ function ModifyProfil() {
           <input
             className="button-profil"
             type="submit"
-            value="Modifier"
+            value="Modifier mot de passe"
           />
           <DeleteProfil />
         </div>
