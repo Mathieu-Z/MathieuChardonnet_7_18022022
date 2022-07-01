@@ -54,7 +54,7 @@ function PostFeed({ post, deletePost }) {
   }
   useEffect(() => {
     loadComments();
-      if (post.users_id === userId || userAdmin) {
+      if (post.userId === userId || userAdmin) {
         setDeleteIconTrash(true)
       }
   },);
@@ -104,7 +104,7 @@ function PostFeed({ post, deletePost }) {
         </div>
           <span className="time_post">{dayjs(post.createdAt).locale("fr").fromNow()}</span>
           <div className="post-feed">
-            <p className="text-post">{post.text_content}</p>
+            <p className="text-post">{post.content}</p>
           </div>
         <div className="footer-post-feed">
           <FavoriteIcon className="favorite-icon" onClick={likeHandle} />
@@ -128,12 +128,12 @@ function PostFeed({ post, deletePost }) {
               comments={comments}
               key={i}
               commentDelete={deleteComment}
-              posts_id={post.id}
+              postId={post.id}
             />
           ))}
         </div>
         <div className="ajout-new-comment">
-          <NewComment posts_id={post.id} newComment={addComment} />
+          <NewComment postId={post.id} newComment={addComment} />
         </div>
       </div>
     </div>

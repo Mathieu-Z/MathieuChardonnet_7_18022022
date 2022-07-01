@@ -14,31 +14,61 @@ function PostCreate(props) {
   } = useForm()
 
   const [emptyMessage, setEmptyMesssage] = useState(null)
-  const [ , setErrorData] = useState("")
+  const [data , setErrorData] = useState("")
+  const [file, setFile] = useState(false)
+  const [postImage, setPostImage] = useState(null)
+
+  const handleImage = e => {
+    setPostImage(URL.createObjectURL(e.target.files[0]))
+    setFile(e.target.files[0])
+  }
 
   const onSubmit = async content => {
-    const data = { users_id: users_id, text_content: content.text_content };
-    if (content.text_content) {
+    //const userInfo = JSON.parse(localStorage.getItem("user"))
+    if (content.text_content || file) {
       setEmptyMesssage(false)
+
+
     } else {
-      data = data
+      
     }
     // POST
-    POST(ENDPOINTS.CREATE_POST, {
-      userId: data.users_id,
-      postId: data.postId,
-      content: data.commentMessage,
-    })
-    .then (response => {
-      if (response.status === 400) {
-        setErrorData("Post non créé!")
-      }
-      if (response.status === 201) {
-        setErrorData("Post créé!")
-      }
-    })
-    .catch (error => {
-    });
+    if (file) {
+      POST(ENDPOINTS.CREATE_POST, {
+        userId: data.userId,
+        postId: data.postId,
+        content: data.commentMessage,
+        imageUrl: data.imageUrl,
+      })
+      .then (response => {
+        if (response.status === 400) {
+          setErrorData("Post non créé!")
+        }
+        if (response.status === 201) {
+          setErrorData("Post créé!")
+        }
+      })
+      .catch (error => {
+
+      });
+    } else {
+      POST(ENDPOINTS.CREATE_POST, {
+        userId: data.userId,
+        postId: data.postId,
+        content: data.commentMessage,
+      })
+      .then (response => {
+        if (response.status === 400) {
+          setErrorData("Post non créé!")
+        }
+        if (response.status === 201) {
+          setErrorData("Post créé!")
+        }
+      })
+      .catch (error => {
+
+      });
+    }
   }
 
 
@@ -64,14 +94,24 @@ function PostCreate(props) {
           />
           {errors.text_content && <span className='error-msg'>{errors.text_content.message}</span>}
         </div>
+        <div>
+        <input className='fichier-post'
+            type="file"
+            id="imageUrl"
+            name="file"
+            accept=".jpg, .jpeg, .png, .gif"
+            onChange={e => handleImage(e)}
+          />
+        </div>
         <div className="button-container">
           <input className="button" type="submit" value="Publier" />
         </div>
 
         <div className="message-post">
           <p>
-            {emptyMessage && "Veuillez publiez un message !"}
+            {emptyMessage && "Veuillez publiez un message avec ou sans une image !"}
           </p>
+          <img src={postImage} alt="" />
         </div>
       </form>
     </div>

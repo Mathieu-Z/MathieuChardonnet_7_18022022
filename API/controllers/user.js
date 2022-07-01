@@ -18,7 +18,7 @@ exports.signup = async (req, res, next) => {
       id: user.id,
       pseudo: user.pseudo,
       email: user.email,
-      token: jwt.sign({ userId: user.id }, `secretToken`, {
+      token: jwt.sign({ userId: user.id }, 'RANDOM_TOKEN_SECRET', {
         expiresIn: "24h",
       }),
     })
@@ -40,10 +40,10 @@ exports.login = async (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ error: 'Mot de passe incorrect !' });
           }
-          res.status(200).json({
-            userId: user._id,
+          return res.status(200).json({
+            userId: user.id,
             token: jwt.sign(
-              { userId: user._id },
+              { userId: user.id },
               'RANDOM_TOKEN_SECRET',
               { expiresIn: '24h' }
             )
@@ -56,7 +56,7 @@ exports.login = async (req, res, next) => {
 
 //modifier mdp (PUT)
 exports.modifyPassword = async (req, res, next) => {
-  const user =  await User.findOne({ where: { token: req.body.token }})
+  const user =  await User.findOne({ token: req.body.token })
   .then(user => {
     if (!user) {
       return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -68,7 +68,7 @@ exports.modifyPassword = async (req, res, next) => {
       }
       bcrypt.hash(req.body.password, 10)
       .then(hash => {
-        User.updateOne({_password: hash}, { ...User, _id: user.id })
+        User.update({_password: hash}, { ...User, _id: user.id })
         .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
         .catch(error => res.status(400).json({ error }))
       });
