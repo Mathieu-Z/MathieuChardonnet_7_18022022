@@ -1,4 +1,4 @@
-/*const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
 
 module.exports = async (req, res, next) => {
@@ -23,9 +23,9 @@ module.exports = async (req, res, next) => {
   } catch (err) {
     return res.status(401).json({ error: 'Token non valide.' });
   }
-};*/
+};
 
-const jwt = require('jsonwebtoken');
+/*const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) => {
   try {
@@ -46,4 +46,4 @@ module.exports = (req, res, next) => {
       error: new Error('Invalid request!')
     });
   }
-};
+};*/

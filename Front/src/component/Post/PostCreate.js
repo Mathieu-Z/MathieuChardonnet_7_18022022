@@ -27,8 +27,6 @@ function PostCreate(props) {
     //const userInfo = JSON.parse(localStorage.getItem("user"))
     if (content.text_content || file) {
       setEmptyMesssage(false)
-
-
     } else {
       
     }

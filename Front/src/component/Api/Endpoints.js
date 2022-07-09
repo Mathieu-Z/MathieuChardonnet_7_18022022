@@ -9,7 +9,7 @@ const endpoints = {
   GET_LIKES: "api/posts/:id",
 
   // CRUD comments
-  GET_ALL_COMMENTS: "/api/comment",
+  GET_ALL_COMMENTS: "/api/comment/:postId",
   CREATE_COMMENT: "/api/comment/:id",
 
   // Auth

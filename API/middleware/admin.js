@@ -9,6 +9,7 @@ module.exports = (req,res,next) => {
       }
     })
   } catch {
+    console.log("ici")
     res.status(401).json({ error: new Error('Requête invalide !')});
   }
 }

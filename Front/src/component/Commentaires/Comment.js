@@ -26,7 +26,7 @@ function Comments({ comments, commentDelete }) {
 
   async function deleteComment() {
     DELETE(ENDPOINTS.DELETE_POST, {
-      content: data.content
+      id: data.comments.id,
     })
     .then (response => {
       if (response.status === 400) {

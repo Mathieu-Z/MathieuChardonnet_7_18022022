@@ -2,7 +2,7 @@ const User = require ('../models/user');
 const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// Créer un compte
+// Créer un compte (POST)
 exports.signup = async (req, res, next) => {
   const hash = await bcrypt.hash(req.body.password, 10)
   userInfo = {
@@ -28,7 +28,7 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-// Connexion à un compte
+// Connexion à un compte (POST)
 exports.login = async (req, res, next) => {
   const user = await User.findOne( {where: { email: req.body.email }})
     .then(user => {
@@ -56,7 +56,7 @@ exports.login = async (req, res, next) => {
 
 //modifier mdp (PUT)
 exports.modifyPassword = async (req, res, next) => {
-  const user =  await User.findOne({ token: req.body.token })
+  const user =  await User.findOne({ token: req.params.token })
   .then(user => {
     if (!user) {
       return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -68,7 +68,7 @@ exports.modifyPassword = async (req, res, next) => {
       }
       bcrypt.hash(req.body.password, 10)
       .then(hash => {
-        User.update({_password: hash}, { ...User, _id: user.id })
+        User.update({password: hash}, { ...User, id: user.id })
         .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
         .catch(error => res.status(400).json({ error }))
       });
@@ -102,7 +102,7 @@ exports.modifyPseudo = async (req, res, next) => {
   }
 }
 
-//deconnexion
+//deconnexion (GET)
 exports.logout = async (req, res) => {
   res.clearCookie("jwt");
   res.status(200).json("OUT");
@@ -111,7 +111,7 @@ exports.logout = async (req, res) => {
 //supprimer le compte (DELETE)
 exports.deleteAccount = async (req, res) => {
   try {
-    const user = await User.findOne({ token: req.body.token })
+    const user = await User.findOne({ token: req.params.token })
     .then(user => {
       user.destroy();
     });
