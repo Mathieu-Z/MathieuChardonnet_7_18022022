@@ -1,3 +1,5 @@
+@import '../color.scss';
+
 .container{
   text-align: center;
 }
@@ -13,6 +15,209 @@ header{
         img{
           width: 300px;
         }
+      }
+    }
+  }
+}
+
+@mixin icon-post {
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+@mixin border-top {
+  border-top: solid 1px;
+  border-color:gray;
+  box-shadow: 0 0 1.1px 0 black;
+}
+
+.supprimer-compte{
+  padding-top: 7px;
+  margin-left: 35px;
+  .delete-icon{
+    position: relative;
+    top: 5px;
+    cursor: pointer;
+  }
+}
+
+.main{
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  background: $primary-color;
+ 
+  .feed{
+    width: 70%;
+    height: auto;
+    padding: 24px;
+    margin-left:180px;
+    margin-top: 70px;
+    margin-bottom: 50px;
+    border-radius: 15px;
+    border: solid 2px;
+    border-color: $text-color;
+    .post-form{
+      height: auto;
+      border-radius: 5px;
+      border: solid 1px;
+      border-color: $tertiary-color;
+    }
+    .header-post{
+      display: flex;
+    }
+    textarea{
+      width: 85%;
+      height: 70px;
+      border-radius: 5px;
+      margin-left: 65px;
+      position: relative;
+    }
+    .text_content_input{
+      padding-top: 10px;
+      padding-left: 10px;
+      font-size: 16px;
+    }
+    .error-msg{
+      color: $secondary-color;
+      margin-left: 90px;
+      font-size: 13px;
+      position: relative;
+      bottom: 10px;
+    }
+    .image-post{
+    margin-left: 90px; 
+    }
+    .button-post{
+      width: 15%;
+      height: 25px;
+      background-color: $secondary-color;
+      border: none;
+      border-radius: 5px;
+      color: $text-color;
+      cursor: pointer;
+    }
+    .button-post:hover{
+      color: $text-color;
+      background-color:black;
+    }
+    .message-post{
+      font-size: 13px;
+      color: $secondary-color;
+      margin-left: 90px;
+    }
+    h1{
+      font-size: 20px;
+      padding-top: 20px;
+    }
+    .getAll-Post{
+      margin-top: 20px;
+      background-color: $text-color;
+      border-radius: 5px;
+      border: solid 1px;
+      border-color: $tertiary-color;
+      box-shadow: 1.1px 1.1px 5px 1.1px $tertiary-color;
+      .text-post{
+        padding-top: 15px;
+        padding-left: 15px;
+      }
+      .post-image-feed{
+        padding-top: 20px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-bottom: 10px;
+        width: 100%;
+        object-fit:cover;
+        height: 450px;   
+      }
+      .avatar-user{
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+      .author-posts{
+        padding-left: 10px;
+        padding-top: 20px;
+      }
+    }
+    .time-post{
+      padding-left: 60px;
+      font-size: 12px;
+      position: relative;
+      bottom: 10px;
+    }
+    .favorite-icon{
+      color:$secondary-color ;
+      margin-left: 15px;
+      @include icon-post;
+    }
+    .all-likes{
+      position: relative;
+      bottom: 14px;
+      left: 3px;
+    }
+    .delete-icon{
+      @include icon-post;
+      margin-left: 10px;   
+    }
+    .comment-form{
+      @include border-top;
+      box-shadow: 30px;
+      margin-top: 15px;
+      margin-left: 5px;
+    }
+    .new-comments{
+      width: 90%;
+      height: 40px;
+      margin-left: 10px;
+      margin-bottom: 20px;
+      margin-top: 20px;
+    }
+    .send-icon{
+      position: relative;
+      top: 10px;
+      left: 3px;
+      cursor: pointer;
+    }
+  }
+  .all-comments{
+      position: relative;
+      @include border-top;
+      margin-left: 5px;
+    .p-comments{
+      margin-left: 10px; 
+      font-size: 14px;
+    }
+    .icon-message{
+      margin-left: 10px;
+      font-size: 17px;
+      margin-top: 15px;
+      position: relative;
+      top: 6px;
+    }
+    .card-comments{
+        @include border-top;
+        margin-top: 10px;
+      .card-comments-header{
+        display: flex;
+        .author-comments{
+          padding-left: 10px;
+          padding-top: 20px;
+          font-weight: bolder;
+        }
+      }
+      .comments-text-p{
+        padding-left: 55px;
+        padding-bottom: 5px;
+      }
+      .delete-icon-comments{
+        cursor: pointer;
+        font-size: 20px;
+        position: absolute;
+        right: 0%;
+        margin-top: -54px;
+        margin-right: 20px;
       }
     }
   }

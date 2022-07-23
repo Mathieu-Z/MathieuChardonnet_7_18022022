@@ -34,7 +34,6 @@ function PostCreate(props) {
     if (file) {
       POST(ENDPOINTS.CREATE_POST, {
         userId: data.userId,
-        postId: data.postId,
         content: data.commentMessage,
         imageUrl: data.imageUrl,
       })
@@ -52,8 +51,8 @@ function PostCreate(props) {
     } else {
       POST(ENDPOINTS.CREATE_POST, {
         userId: data.userId,
-        postId: data.postId,
         content: data.commentMessage,
+        imageUrl: null,
       })
       .then (response => {
         if (response.status === 400) {
@@ -73,7 +72,7 @@ function PostCreate(props) {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)} className="post-form">
-        <div className="haeder-post">
+        <div className="header-post">
           <textarea
             row={2}
             type="textarea"
@@ -93,17 +92,18 @@ function PostCreate(props) {
           {errors.text_content && <span className='error-msg'>{errors.text_content.message}</span>}
         </div>
         <div>
-        <input className='fichier-post'
+          <input className='fichier-post'
             type="file"
             id="imageUrl"
             name="file"
             accept=".jpg, .jpeg, .png, .gif"
             onChange={e => handleImage(e)}
           />
+          <div className="button-container">
+            <input className="button" type="submit" value="Publier" />
+          </div>
         </div>
-        <div className="button-container">
-          <input className="button" type="submit" value="Publier" />
-        </div>
+
 
         <div className="message-post">
           <p>

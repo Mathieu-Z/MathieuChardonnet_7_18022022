@@ -1,20 +1,20 @@
 import React from "react"
 import { useState } from "react"
-import { PUT } from '../Api/Axios';
+import { POST, PUT } from '../Api/Axios';
 import ENDPOINTS from "../Api/Endpoints";
 import SendIcon from '@mui/icons-material/Send';
 
-function NewComment({ posts_id, newComment }) {
+function NewComment({ postId, newComment }) {
   const [commentMessage, setCommentMessage] = useState("");
-  const [sendButton, setSendButton] = useState(false);
-  const [errorData, setErrorData] = useState("")
+  const [, setSendButton] = useState(false);
+  const [, setErrorData] = useState("")
   const userId = JSON.parse(localStorage.getItem("user")).id
 
   const onSubmit = data => {
 
-    const response = PUT(ENDPOINTS.CREATE_COMMENT, {
-      users_id: userId,
-      posts_id: posts_id,
+    const response = POST(ENDPOINTS.CREATE_COMMENT, {
+      userId: userId,
+      postId: postId,
       content: commentMessage,
     })
     if (response.status === 400) {

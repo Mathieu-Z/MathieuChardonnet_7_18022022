@@ -5,12 +5,6 @@ const User = require('../models/user');
 exports.getAllRemarks = (req, res, next) => {
   Remark.findAll({ 
     where: { postId: req.params.postId },
-    /*include: [
-      {
-        model: User,
-        attributes: ["pseudo", "id"],
-      }
-    ]*/
   })
     .then((comments) => {
       res.status(200).json(comments)})
@@ -22,7 +16,7 @@ exports.createRemark = async (req, res, next) => {
   try {
     const user = await User.findOne({
       attributes: ["pseudo", "id"],
-      where: {id: req.params.userId},
+      where: {id: req.body.userId},
     })
     console.log("utilisateur trouvé", user.dataValues)
     const comment = await Remark.create({
@@ -37,7 +31,7 @@ exports.createRemark = async (req, res, next) => {
     res.status(500).send({error: "Erreur serveur"})
   }
 };
-  
+
 // suppression d'un commentaire (DELETE)
 exports.deleteRemark = async (req, res) => {
   const comment = await Remark.destroy({where: {id: req.params.id}})

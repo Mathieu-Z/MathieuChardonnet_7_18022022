@@ -17,7 +17,7 @@ export default function FormLogin() {
   // usenavigate
   const navigate = useNavigate()
 
-  // registrer + err
+  // register + error
   const {
     register,
     handleSubmit,

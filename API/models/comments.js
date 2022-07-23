@@ -11,7 +11,6 @@ class Comments extends Model {
       },
       userId: {type: DataTypes.INTEGER, allowNull: false},
       content: {type: DataTypes.STRING, allowNull: false},
-      date: { type: DataTypes.DATE },
       postId: {type: DataTypes.INTEGER, allowNull: false},
     },
       {

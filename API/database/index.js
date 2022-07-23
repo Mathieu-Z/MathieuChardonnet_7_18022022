@@ -14,8 +14,8 @@ Post.init(connectionDB);
 Comment.init(connectionDB);
 Like.init(connectionDB);
 
-/*Post.belongsTo(User, {foreignKey: 'users_id'});
-Comment.belongsTo(User, {foreignKey: 'users_id'}); 
-Comment.belongsTo(Post, {foreignKey: 'posts_id'});*/
+Post.belongsTo(User, {foreignKey: 'userId'});
+Comment.belongsTo(User, {foreignKey: 'userId'}); 
+Comment.belongsTo(Post, {foreignKey: 'postId'});
 
 module.exports = connectionDB;

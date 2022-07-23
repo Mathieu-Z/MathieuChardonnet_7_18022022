@@ -29,7 +29,7 @@ function DeleteProfil() {
   }
 
   return (
-    <div className="supprimer-compte">Supprimer compte<DeleteIcon onClick {...() => {
+    <div className="supprimer-compte">Supprimer compte<DeleteIcon className="delete-icon" onClick ={() => {
       if (window.confirm("Voulez-êtes sûr de vouloir supprimer votre profi?")) {
         deleteHandle()
       }

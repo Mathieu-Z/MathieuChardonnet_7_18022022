@@ -6,8 +6,9 @@ const admin = require('../middleware/admin');
 const commentCtrl = require('../controllers/comment');
 
 router.get('/:postId', auth, commentCtrl.getAllRemarks);
-router.delete('/:id', auth, admin, commentCtrl.deleteRemark);
 router.post('/', auth, commentCtrl.createRemark);
+router.delete('/:id', auth, commentCtrl.deleteRemark);
+router.delete('/admin/:id', auth, admin, commentCtrl.deleteRemark);
 
 module.exports = router;
 

@@ -46,7 +46,6 @@ exports.createLike = async (req, res, next) => {
 
 //recupérer tous les likes d'un post (GET)
 exports.getLike = async (req, res, next) => {
-  console.log(req.params.postId);
   await Like.findAll({ where: { postId: req.params.id } })
     .then((like) => res.status(200).json(like))
     .catch((error) => res.status(404).json({ error }));

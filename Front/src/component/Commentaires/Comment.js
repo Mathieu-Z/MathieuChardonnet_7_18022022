@@ -16,10 +16,10 @@ function Comments({ comments, commentDelete }) {
 
   const userInfo = JSON.parse(localStorage.getItem("user"))
   const userId = userInfo.id
-  const userAdmin = userInfo.admin
+  const userAdmin = userInfo.isAdmin
 
   useEffect(() => {
-    if (comments.User.id === userId || userAdmin === 1) {
+    if (comments.user.id === userId || userAdmin === 1) {
       setDeleteIconTrash(true)
     }
   }, [userId, userAdmin])
@@ -44,7 +44,7 @@ function Comments({ comments, commentDelete }) {
   return (
     <div className="card-comments">
       <div className="card-comments-header">
-        <p className="author-comments">{comments.User.pseudo}</p>
+        <p className="author-comments">{comments.user.pseudo}</p>
       </div>
       <div className="comments-text">
         <p className="comments-text-p">{comments.content}</p>

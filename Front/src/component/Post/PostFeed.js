@@ -8,16 +8,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import MessageIcon from '@mui/icons-material/Message';
 
-// Gérer l'heure de posts avec DAYJS
+// Gérer l'heure de post avec DAYJS
 require("dayjs/locale/fr.js")
 const relativeTime = require("dayjs/plugin/relativeTime")
 dayjs.extend(relativeTime)
 
 function PostFeed({ post, deletePost }) {
-
+  console.log(post);
   const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
   const [dataComment, setDataComment] = useState([])
-  const [showComments, setshowComments] = useState(false)
+  const [showComments] = useState(false)
   const [showLikes, setShowLikes] = useState(false)
   const [data, setErrorData] = useState("")
 
@@ -34,12 +34,12 @@ function PostFeed({ post, deletePost }) {
   // récuperation  des données dans le local storage
   const user = JSON.parse(localStorage.getItem("user"))
   const userId = user.id
-  const userAdmin = user.admin
+  const userAdmin = user.isAdmin
 
   // get comments
   function loadComments() {
     GET(ENDPOINTS.GET_ALL_COMMENTS, {
-      content: data.content
+
     })
     .then (resComments => {
       if (resComments.status === 400) {
@@ -57,11 +57,13 @@ function PostFeed({ post, deletePost }) {
       if (post.userId === userId || userAdmin) {
         setDeleteIconTrash(true)
       }
-  },);
+  },[post.userId, userId, userAdmin]
+  );
 
-  // like Posts
+  // like post
   function likeHandle() {
     GET(ENDPOINTS.LIKE_UNLINKE, {
+
     })
     .then (res => {
       if (res.status === 404) {
@@ -78,6 +80,7 @@ function PostFeed({ post, deletePost }) {
   // get likes
   function loadLikes() {
     GET(ENDPOINTS.GET_LIKES , {
+
     })
     .then (resLikes => {
       if (resLikes.status === 404) {
@@ -99,10 +102,9 @@ function PostFeed({ post, deletePost }) {
   return (
     <div>
       <div className="card-feed">
-        <div className="flex-avatar">
-          <h4 className="author-posts">{post.User.pseudo}</h4>
+        <div className="author">
         </div>
-          <span className="time_post">{dayjs(post.createdAt).locale("fr").fromNow()}</span>
+          <span className="time-post">{dayjs(post.createdAt).locale("fr").fromNow()}</span>
           <div className="post-feed">
             <p className="text-post">{post.content}</p>
           </div>

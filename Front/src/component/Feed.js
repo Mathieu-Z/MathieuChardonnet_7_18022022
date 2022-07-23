@@ -15,12 +15,11 @@ function Feed() {
 
   async function loadPosts() {
     GET(ENDPOINTS.GET_ALL_POSTS, {
-      /*userId: userId,
-      postId: data.postId,
-      content: data.commentMessage,*/
+
     })
     .then (resPost => {
-      posts = resPost.data
+      setPosts(resPost.data);
+      console.log(posts);
       if (resPost.status === 400) {
         setErrorData("Posts non trouvés!")
       }

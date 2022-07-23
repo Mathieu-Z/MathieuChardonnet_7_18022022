@@ -1,6 +1,7 @@
 const User = require ('../models/user');
 const bcrypt = require ('bcrypt');
 const jwt = require('jsonwebtoken');
+const { promisify } = require('util');
 
 // Créer un compte (POST)
 exports.signup = async (req, res, next) => {
@@ -10,7 +11,6 @@ exports.signup = async (req, res, next) => {
     email: req.body.email,
     password: hash,
   }
-  console.log("user prêt à être créé", userInfo)  
   try {
     const user = await User.create(userInfo)
     console.log("Utilisateur créé !", userInfo)
@@ -56,24 +56,38 @@ exports.login = async (req, res, next) => {
 
 //modifier mdp (PUT)
 exports.modifyPassword = async (req, res, next) => {
-  const user =  await User.findOne({ token: req.params.token })
-  .then(user => {
-    if (!user) {
-      return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-    }
-    bcrypt.compare(req.body.password, user.password)
-    .then(valid => {
-      if (!valid) {
-        return res.status(401).json({ error: 'Mot de passe incorrect !' });
+  const authHeader = req.headers.authorization;
+  console.log(authHeader);
+  if (!authHeader){
+    return res.status(401).json({ error: 'token inexistant' });
+  }
+  const [, token] = authHeader.split(' ');
+  try {
+    const decoded = await promisify(jwt.verify)(
+      token,
+      'RANDOM_TOKEN_SECRET'
+    );
+    await User.findOne({where: { id: decoded.userId }})
+    .then(user => {
+      if (!user) {
+        return res.status(401).json({ error: 'Utilisateur non trouvé !' });
       }
-      bcrypt.hash(req.body.password, 10)
-      .then(hash => {
-        User.update({password: hash}, { ...User, id: user.id })
-        .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
-        .catch(error => res.status(400).json({ error }))
-      });
-    });      
-  });
+      bcrypt.compare(req.body.password, user.password)
+      .then(valid => {
+        if (!valid) {
+          return res.status(401).json({ error: 'Mot de passe incorrect !' });
+        }
+        bcrypt.hash(req.body.newPassword, 10)
+        .then(hash => {
+          user.update({password: hash}, { ...User, id: user.id })
+          .then(() => res.status(201).json({message: 'Mot de passe modifiée !'}))
+          .catch(error => res.status(400).json({ error }))
+        });
+      });      
+    });
+  }catch{
+    return res.status(401).json({ error: 'Requête invalide !'});
+  }
 };
 
 //modifier pseudo (PUT)
@@ -90,7 +104,7 @@ exports.modifyPseudo = async (req, res, next) => {
       console.log("New userInfo : ", user)
       res.status(200).json({
         user: user,
-        messageRetour: "Votre profil a bien été modifié",
+        messageRetour: "Votre profil à bien été modifié",
       })
     } catch (error) {
       return res
