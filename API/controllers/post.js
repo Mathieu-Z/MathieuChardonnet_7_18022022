@@ -42,14 +42,17 @@ exports.createPost = async (req, res, next) => {
 exports.getAllPosts = async (req, res, next) => {
   try {  
     await Post.findAll({
-    attributes: ["id", "content", "imageUrl", "createdAt", "userId"],
-    order: [["createdAt", "DESC"]],
-    include: [
-      {
-        model: User,
-        attributes: ["pseudo", "id"],
-      }
-    ]
+      attributes: ["id", "content", "imageUrl", "createdAt", "userId"],
+      order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: User,
+          attributes: ["pseudo", "id"],
+        }
+      ]
+    })
+    .then(posts =>{
+      res.json(posts);
     })
   } catch (error) {
     return res.status(500).send({

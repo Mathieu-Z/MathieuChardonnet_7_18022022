@@ -5,6 +5,7 @@ const userRoutes = require('./routes/user');
 const commentRoutes = require('./routes/comment');
 const likeRoutes = require('./routes/like')
 const path = require('path');
+const cors = require('cors');
 
 require('dotenv').config()
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
 app.use('/api/post', postRoutes);
 app.use('/api/auth', userRoutes);
 app.use('/api/comment', commentRoutes);

@@ -3,8 +3,8 @@ const Like = require('../models/likes');
 
 // création d'un like (POST)
 exports.createLike = async (req, res, next) => {
-  const userId = req.body.userId;
-  const postId = req.body.postId;
+  const userId = req.params.id;
+  const postId = req.params.idPost;
 
   await Post.findOne({ where: { id: postId } })
     .then((post) => {

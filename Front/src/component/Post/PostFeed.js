@@ -14,7 +14,6 @@ const relativeTime = require("dayjs/plugin/relativeTime")
 dayjs.extend(relativeTime)
 
 function PostFeed({ post, deletePost }) {
-  console.log(post);
   const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
   const [dataComment, setDataComment] = useState([])
   const [showComments] = useState(false)
@@ -62,7 +61,9 @@ function PostFeed({ post, deletePost }) {
 
   // like post
   function likeHandle() {
-    GET(ENDPOINTS.LIKE_UNLINKE, {
+    let test = ENDPOINTS.LIKE_UNLINKE.replace(':idPost', post.id)
+    console.log(test.replace(':id', post.userId))
+    GET(test.replace(':id', post.userId), {
 
     })
     .then (res => {
@@ -70,6 +71,7 @@ function PostFeed({ post, deletePost }) {
         setErrorData("Likes pas fonctionnel!")
       }
       if (res.status === 200) {
+        //window.location.reload();
         setErrorData("Likes!")
       }
     })
@@ -79,7 +81,7 @@ function PostFeed({ post, deletePost }) {
 
   // get likes
   function loadLikes() {
-    GET(ENDPOINTS.GET_LIKES , {
+    GET(ENDPOINTS.GET_LIKES.replace(':id', post.id) , {
 
     })
     .then (resLikes => {
@@ -88,7 +90,7 @@ function PostFeed({ post, deletePost }) {
       }
       if (resLikes.status === 200) {
         setErrorData("Likes chargés!")
-        setShowLikes(data.length)
+        setShowLikes(resLikes.data.length)
       }
     })
     .catch (error => {

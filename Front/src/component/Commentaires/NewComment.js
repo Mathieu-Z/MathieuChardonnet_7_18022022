@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import { POST, PUT } from '../Api/Axios';
+import { POST } from '../Api/Axios';
 import ENDPOINTS from "../Api/Endpoints";
 import SendIcon from '@mui/icons-material/Send';
 
@@ -12,7 +12,7 @@ function NewComment({ postId, newComment }) {
 
   const onSubmit = data => {
 
-    const response = POST(ENDPOINTS.CREATE_COMMENT, {
+    const response = POST(ENDPOINTS.CREATE_COMMENT.replace(':id', postId), {
       userId: userId,
       postId: postId,
       content: commentMessage,
@@ -25,7 +25,6 @@ function NewComment({ postId, newComment }) {
       window.location.reload()
     }
   }
-
 
   return (
     <div>

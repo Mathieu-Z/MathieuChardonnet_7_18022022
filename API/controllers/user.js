@@ -57,7 +57,6 @@ exports.login = async (req, res, next) => {
 //modifier mdp (PUT)
 exports.modifyPassword = async (req, res, next) => {
   const authHeader = req.headers.authorization;
-  console.log(authHeader);
   if (!authHeader){
     return res.status(401).json({ error: 'token inexistant' });
   }

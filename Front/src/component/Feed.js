@@ -35,15 +35,15 @@ function Feed() {
   
   useEffect(() => {
     loadPosts()
-  }, [Token, setPosts, userId])
+  }, [Token, setPosts, userId]);
 
   const addnewpost = () => {
     window.location.reload()
-  }
+  };
 
   function deletePost(id) {
     const data = posts.filter(post => post.id !== id);
-    DELETE(ENDPOINTS.DELETE_POST, {
+    DELETE(ENDPOINTS.DELETE_POST.replace(':id', data.postId), {
       userId: data.userId,
       postId: data.postId,
       content: data.commentMessage,
