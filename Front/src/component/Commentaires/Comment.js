@@ -12,7 +12,7 @@ dayjs.extend(relativeTime)
 function Comments({ comments, commentDelete }) {
 
   const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
-  const [data, setErrorData] = useState("")
+  const [, setErrorData] = useState("")
 
   const userInfo = JSON.parse(localStorage.getItem("user"))
   const userId = userInfo.id
@@ -25,20 +25,37 @@ function Comments({ comments, commentDelete }) {
   }, [userId, userAdmin])
 
   async function deleteComment() {
-    DELETE(ENDPOINTS.DELETE_POST.replace(':id', comments.id), {
-      //id: data.comments.id,
-    })
-    .then (response => {
-      if (response.status === 400) {
-        setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
-      }
-      if (response.status === 200) {
-        (window.confirm("Votre commentaire à bien été supprimé!"))
-        window.location.reload()
-      }
-    })
-    .catch (error => {
-    });
+    if (userAdmin === 1){
+      DELETE(ENDPOINTS.DELETE_COMMENT_ADMIN.replace(':id', comments.id), {
+        //id: data.comments.id,
+      })
+      .then (response => {
+        if (response.status === 400) {
+          setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
+        }
+        if (response.status === 200) {
+          (window.confirm("Votre commentaire à bien été supprimé!"))
+          window.location.reload()
+        }
+      })
+      .catch (error => {
+      });
+    } if (userId === comments.userId){
+      DELETE(ENDPOINTS.DELETE_COMMENT.replace(':id', comments.id), {
+        //id: data.comments.id,
+      })
+      .then (response => {
+        if (response.status === 400) {
+          setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
+        }
+        if (response.status === 200) {
+          (window.confirm("Votre commentaire à bien été supprimé!"))
+          window.location.reload()
+        }
+      })
+      .catch (error => {
+      });
+    }
   }
 
   return (

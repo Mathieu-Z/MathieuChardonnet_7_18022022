@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import NewComment from "../Commentaires/NewComment";
 import Comments from "../Commentaires/Comment";
 import dayjs from 'dayjs';
-import { GET } from '../Api/Axios';
+import { GET, POST } from '../Api/Axios';
 import ENDPOINTS from '../Api/Endpoints';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -16,7 +16,7 @@ dayjs.extend(relativeTime)
 function PostFeed({ post, deletePost }) {
   const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
   const [dataComment, setDataComment] = useState([])
-  const [showComments] = useState(false)
+  const [showComments, setshowComments] = useState(false)
   const [showLikes, setShowLikes] = useState(false)
   const [data, setErrorData] = useState("")
 
@@ -32,13 +32,13 @@ function PostFeed({ post, deletePost }) {
 
   // récuperation  des données dans le local storage
   const user = JSON.parse(localStorage.getItem("user"))
-  const userId = user.id
+  const userId = user.userId
   const userAdmin = user.isAdmin
 
   // get comments
   function loadComments() {
-    GET(ENDPOINTS.GET_ALL_COMMENTS, {
-
+    GET(ENDPOINTS.GET_ALL_COMMENTS.replace(':postId', post.id), {
+      //postId: post.id
     })
     .then (resComments => {
       if (resComments.status === 400) {
@@ -46,13 +46,19 @@ function PostFeed({ post, deletePost }) {
       }
       if (resComments.status === 200) {
         setErrorData("Commentaires chargés!")
+        //console.log(resComments);
+        
+        //setDataComment(resComments.data)
+        setshowComments(resComments.data.length > 0)
       }
     })
     .catch (error => {
     })
   }
+
   useEffect(() => {
     loadComments();
+    console.log(post.userId, userId, userAdmin);
       if (post.userId === userId || userAdmin) {
         setDeleteIconTrash(true)
       }
@@ -62,7 +68,7 @@ function PostFeed({ post, deletePost }) {
   // like post
   function likeHandle() {
     let test = ENDPOINTS.LIKE_UNLINKE.replace(':idPost', post.id)
-    console.log(test.replace(':id', post.userId))
+    //console.log(test.replace(':id', post.userId))
     GET(test.replace(':id', post.userId), {
 
     })
@@ -96,6 +102,28 @@ function PostFeed({ post, deletePost }) {
     .catch (error => {
     })
   }
+
+  function postLikes() {
+    /*const response = POST(ENDPOINTS.GET_LIKES.replace(':id', post.id) , {
+
+    })*/
+    POST(ENDPOINTS.CREATE_LIKES, {
+      userId: userId,
+      postId: post.id,
+    })
+    .then (respostLikes => {
+      if (respostLikes.status === 404) {
+        setErrorData("Likés !")
+      }
+      if (respostLikes.status === 201) {
+        setErrorData("Dislikés !")
+        window.location.reload();
+      }
+    })
+    .catch (error => {
+
+    })
+  }
   
   useEffect(() => {
     loadLikes();
@@ -104,14 +132,15 @@ function PostFeed({ post, deletePost }) {
   return (
     <div>
       <div className="card-feed">
-        <div className="author">
+        <div className="post-info">
+          <div className="post-info-author"> {post.User.pseudo} </div>
+          <span className="post-info-time">{dayjs(post.createdAt).locale("fr").fromNow()}</span>
         </div>
-          <span className="time-post">{dayjs(post.createdAt).locale("fr").fromNow()}</span>
           <div className="post-feed">
             <p className="text-post">{post.content}</p>
           </div>
         <div className="footer-post-feed">
-          <FavoriteIcon className="favorite-icon" onClick={likeHandle} />
+          <FavoriteIcon className="favorite-icon" onClick={postLikes} />
           <span className="all-likes">{showLikes}</span>
           <span>
             {DeleteIconTrash && (

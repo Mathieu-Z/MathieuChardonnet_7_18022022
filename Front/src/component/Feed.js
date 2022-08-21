@@ -11,7 +11,7 @@ function Feed() {
   const Token = localStorage.getItem("Token")
   const user = localStorage.getItem('user')
   const userId = JSON.parse(user).id
-  const [data, setErrorData] = useState("")
+  const [, setErrorData] = useState("")
 
   async function loadPosts() {
     GET(ENDPOINTS.GET_ALL_POSTS, {
@@ -19,7 +19,6 @@ function Feed() {
     })
     .then (resPost => {
       setPosts(resPost.data);
-      console.log(posts);
       if (resPost.status === 400) {
         setErrorData("Posts non trouvés!")
       }
@@ -32,7 +31,6 @@ function Feed() {
     });
   }
 
-  
   useEffect(() => {
     loadPosts()
   }, [Token, setPosts, userId]);
@@ -41,28 +39,54 @@ function Feed() {
     window.location.reload()
   };
 
-  function deletePost(id) {
-    const data = posts.filter(post => post.id !== id);
-    DELETE(ENDPOINTS.DELETE_POST.replace(':id', data.postId), {
-      userId: data.userId,
-      postId: data.postId,
-      content: data.commentMessage,
-    })
-    .then (resDelete => {
-      if (resDelete.status === 500) {
-        setErrorData("Post non trouvé!");
-      }
-      if (resDelete.status === 400) {
-        setErrorData("Post non supprimé!");
-      }
-      if (resDelete.status === 200) {
-        setErrorData("Post supprimé!");
-        window.location.reload()
-      }
-    })
-    .catch (error => {
+  function deletePost(id){
 
-    });
+    if(user.isAdmin === 1){
+      const data = posts.filter(post => post.id !== id);
+      DELETE(ENDPOINTS.DELETE_POST_ADMIN.replace(':id', data.postId), {
+        userId: data.userId,
+        postId: data.postId,
+        content: data.commentMessage,
+      })
+      .then (resDelete => {
+        if (resDelete.status === 500) {
+          setErrorData("Post non trouvé!");
+        }
+        if (resDelete.status === 400) {
+          setErrorData("Post non supprimé!");
+        }
+        if (resDelete.status === 200) {
+          setErrorData("Post supprimé!");
+          window.location.reload()
+        }
+      })
+      .catch (error => {
+      });
+
+    } if (user.id === posts.userId) {
+      const data = posts.filter(post => post.id !== id);
+      DELETE(ENDPOINTS.DELETE_POST.replace(':id', data.postId), {
+        userId: data.userId,
+        postId: data.postId,
+        content: data.commentMessage,
+      })
+      .then (resDelete => {
+        if (resDelete.status === 500) {
+          setErrorData("Post non trouvé!");
+        }
+        if (resDelete.status === 400) {
+          setErrorData("Post non supprimé!");
+        }
+        if (resDelete.status === 200) {
+          setErrorData("Post supprimé!");
+          window.location.reload()
+        }
+      })
+      .catch (error => {
+      });
+    } else{
+      setErrorData("Vous n'avez pas les droits de supprimer ce post!");
+    }
   }
 
   return (

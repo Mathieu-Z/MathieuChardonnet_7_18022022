@@ -8,22 +8,28 @@ function NewComment({ postId, newComment }) {
   const [commentMessage, setCommentMessage] = useState("");
   const [, setSendButton] = useState(false);
   const [, setErrorData] = useState("")
-  const userId = JSON.parse(localStorage.getItem("user")).id
+  const userId = JSON.parse(localStorage.getItem("user")).userId
+  const userPseudo = JSON.parse(localStorage.getItem("user")).pseudo
 
   const onSubmit = data => {
 
-    const response = POST(ENDPOINTS.CREATE_COMMENT.replace(':id', postId), {
+    POST(ENDPOINTS.CREATE_COMMENT, {
+      pseudo: userPseudo,
       userId: userId,
       postId: postId,
       content: commentMessage,
     })
-    if (response.status === 400) {
-      setErrorData("Vous n'êtes pas inscrit!");
-    }
-    if (response.status === 201) {
-      newComment(response.data.comment)
-      window.location.reload()
-    }
+    .then (response =>{
+      if (response.status === 400) {
+        setErrorData("Vous n'êtes pas inscrit!");
+      }
+      if (response.status === 201) {
+        newComment(response.data.comment)
+        window.location.reload()
+      }
+    })
+    .catch (error => {
+    });
   }
 
   return (

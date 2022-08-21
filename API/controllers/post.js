@@ -5,8 +5,8 @@ const fs = require('fs');
 
 // publier un post (POST)
 exports.createPost = async (req, res, next) => {
+  console.log(req);
   try {
-    console.log("ici");
     const user = await User.findOne({
       attributes: ["pseudo", "id"],
       where: {id: req.body.userId},
@@ -14,14 +14,14 @@ exports.createPost = async (req, res, next) => {
     })
     if (user !== null) {
       console.log("user :", user)
-      let imageUrl
-      if (req.file) {
-        console.log("filename", req.file.filename)
-        imageUrl = `${req.file.filename}`
-      } else {
+      /*if (req.file) {
+        console.log("filename", req.file.filename)*/
+        console.log(req.file);
+        console.log(req.body.imageUrl);
+        imageUrl = `${req.body.imageUrl}`
+      /*} else {
         imageUrl = null
-      }
-      console.log("ici2");
+      }*/
       const post = await Post.create({
         userId: req.body.userId,
         content: req.body.content,

@@ -3,10 +3,12 @@ const User = require('../models/user');
 
 //trouve tous les commentaires (GET)
 exports.getAllRemarks = (req, res, next) => {
+  console.log(req.params.postId);
   Remark.findAll({ 
     where: { postId: req.params.postId },
   })
     .then((comments) => {
+      console.log(comments);
       res.status(200).json(comments)})
     .catch((error) => res.status(404).json({ error }));
 };

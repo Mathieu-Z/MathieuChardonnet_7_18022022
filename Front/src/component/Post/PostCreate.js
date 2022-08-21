@@ -24,25 +24,25 @@ function PostCreate(props) {
   }
 
   const onSubmit = async content => {
-    //const userInfo = JSON.parse(localStorage.getItem("user"))
+    const userId = JSON.parse(localStorage.getItem("user")).userId
     if (content.text_content || file) {
       setEmptyMesssage(false)
     } else {
-      
     }
     // POST
     if (file) {
       POST(ENDPOINTS.CREATE_POST, {
-        userId: data.userId,
-        content: data.commentMessage,
-        imageUrl: data.imageUrl,
-      })
+        userId: userId,
+        content: content.text_content,
+        imageUrl: file,
+      },{},{"Content-Type": "multipart/form-data"})
       .then (response => {
         if (response.status === 400) {
           setErrorData("Post non créé!")
         }
         if (response.status === 201) {
           setErrorData("Post créé!")
+          //window.location.reload()
         }
       })
       .catch (error => {
@@ -50,16 +50,17 @@ function PostCreate(props) {
       });
     } else {
       POST(ENDPOINTS.CREATE_POST, {
-        userId: data.userId,
-        content: data.commentMessage,
+        userId: userId,
+        content: content.text_content,
         imageUrl: null,
-      })
+      },{})
       .then (response => {
         if (response.status === 400) {
           setErrorData("Post non créé!")
         }
         if (response.status === 201) {
           setErrorData("Post créé!")
+          window.location.reload()
         }
       })
       .catch (error => {

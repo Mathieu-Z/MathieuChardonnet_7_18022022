@@ -11,5 +11,3 @@ router.delete('/:id', auth, commentCtrl.deleteRemark);
 router.delete('/admin/:id', auth, admin, commentCtrl.deleteRemark);
 
 module.exports = router;
-
-// creer route admin

@@ -9,7 +9,6 @@ label{
 }
 
 input{
-  width: 250px;
   height: 25px;
   margin: 1.5%;
   font-size: medium;
@@ -38,4 +37,5 @@ a{
   border-radius: 10px 10px 10px 10px;
   color: $text-color;
   background-color: $secondary-color;
+  cursor: pointer;
 }

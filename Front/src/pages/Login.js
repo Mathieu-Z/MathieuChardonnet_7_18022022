@@ -41,9 +41,11 @@ export default function FormLogin() {
       if (response.status === 200) {
         let token = response.data.token
         let user = JSON.stringify(response.data)
+        let pseudo = response.data.pseudo
         console.log(token + user)
         localStorage.setItem("Token", token)
         localStorage.setItem("user", user)
+        localStorage.setItem("pseudo", pseudo)
         localStorage.getItem("user", user, "token", token)
         navigate("/home")
       }

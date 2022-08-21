@@ -12,7 +12,7 @@ const endpoints = {
 
   // CRUD comments
   GET_ALL_COMMENTS: "/api/comment/:postId",
-  CREATE_COMMENT: "/api/comment/:id",
+  CREATE_COMMENT: "/api/comment/",
   DELETE_COMMENT: "/api/comment/:id",
   DELETE_COMMENT_ADMIN: "/api/comment/admin/:id",
 

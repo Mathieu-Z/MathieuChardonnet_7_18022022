@@ -49,14 +49,13 @@ function ModifyProfil() {
     PUT(ENDPOINTS.UPDATE_PSEUDO, {
       pseudo: data.pseudo,
     })
-    .then (respseudo => {
-      if (respseudo.status === 500) {
+    .then (resPseudo => {
+      if (resPseudo.status === 500) {
         setErrorData("Vous n'êtes pas inscrit!");
       }
-      if (respseudo.status === 200) {
-        localStorage.clear();
+      if (resPseudo.status === 200) {
         (window.confirm("Votre pseudo a bien été modifé !"))
-        navigate("/profil")
+        //window.location.reload()
       }
     })
     .catch (error => {
