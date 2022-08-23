@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { POST } from '../Api/Axios';
+import { POST, POSTFILE } from '../Api/Axios';
 import ENDPOINTS from '../Api/Endpoints';
 
 
@@ -14,7 +14,7 @@ function PostCreate(props) {
   } = useForm()
 
   const [emptyMessage, setEmptyMesssage] = useState(null)
-  const [data , setErrorData] = useState("")
+  const [data, setErrorData] = useState("")
   const [file, setFile] = useState(false)
   const [postImage, setPostImage] = useState(null)
 
@@ -28,21 +28,27 @@ function PostCreate(props) {
     if (content.text_content || file) {
       setEmptyMesssage(false)
     } else {
+      
     }
     // POST
     if (file) {
-      POST(ENDPOINTS.CREATE_POST, {
+      let data2 = new FormData()
+      data2.append("userId", userId)
+      data2.append("content", content.text_content)
+      data2.append("image", file)
+      POSTFILE(ENDPOINTS.CREATE_POST, data2)
+      /*POST(ENDPOINTS.CREATE_POST, {
         userId: userId,
         content: content.text_content,
         imageUrl: file,
-      },{},{"Content-Type": "multipart/form-data"})
+      },{},{"Content-Type": "multipart/form-data"})*/
       .then (response => {
         if (response.status === 400) {
           setErrorData("Post non créé!")
         }
         if (response.status === 201) {
           setErrorData("Post créé!")
-          //window.location.reload()
+          window.location.reload()
         }
       })
       .catch (error => {

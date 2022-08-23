@@ -11,6 +11,8 @@ dayjs.extend(relativeTime)
 
 function Comments({ comments, commentDelete }) {
 
+  console.log(comments);
+
   const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
   const [, setErrorData] = useState("")
 
@@ -19,7 +21,7 @@ function Comments({ comments, commentDelete }) {
   const userAdmin = userInfo.isAdmin
 
   useEffect(() => {
-    if (comments.user.id === userId || userAdmin === 1) {
+    if (comments.userId === userId || userAdmin === 1) {
       setDeleteIconTrash(true)
     }
   }, [userId, userAdmin])
@@ -61,7 +63,7 @@ function Comments({ comments, commentDelete }) {
   return (
     <div className="card-comments">
       <div className="card-comments-header">
-        <p className="author-comments">{comments.user.pseudo}</p>
+        <p className="author-comments">{comments.userId}</p>
       </div>
       <div className="comments-text">
         <p className="comments-text-p">{comments.content}</p>

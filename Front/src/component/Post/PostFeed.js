@@ -36,9 +36,9 @@ function PostFeed({ post, deletePost }) {
   const userAdmin = user.isAdmin
 
   // get comments
-  function loadComments() {
+  async function loadComments() {
     GET(ENDPOINTS.GET_ALL_COMMENTS.replace(':postId', post.id), {
-      //postId: post.id
+
     })
     .then (resComments => {
       if (resComments.status === 400) {
@@ -46,9 +46,8 @@ function PostFeed({ post, deletePost }) {
       }
       if (resComments.status === 200) {
         setErrorData("Commentaires chargés!")
-        //console.log(resComments);
-        
-        //setDataComment(resComments.data)
+        console.log(resComments.data);
+        setDataComment(resComments.data)
         setshowComments(resComments.data.length > 0)
       }
     })
@@ -58,8 +57,8 @@ function PostFeed({ post, deletePost }) {
 
   useEffect(() => {
     loadComments();
-    console.log(post.userId, userId, userAdmin);
-      if (post.userId === userId || userAdmin) {
+    //console.log(post.userId, userId, userAdmin);
+      if (post.userId == userId || userAdmin) {
         setDeleteIconTrash(true)
       }
   },[post.userId, userId, userAdmin]
@@ -138,6 +137,13 @@ function PostFeed({ post, deletePost }) {
         </div>
           <div className="post-feed">
             <p className="text-post">{post.content}</p>
+            {post.imageUrl && (
+              <img
+                src={post.imageUrl}
+                alt="post-image"
+                className="post-image-feed"
+              />
+            )}
           </div>
         <div className="footer-post-feed">
           <FavoriteIcon className="favorite-icon" onClick={postLikes} />

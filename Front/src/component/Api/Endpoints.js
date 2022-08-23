@@ -24,7 +24,7 @@ const endpoints = {
   // CRUD user
   GET_ONE_USER: "/api/auth/:id",
   GET_ALL: "/api/auth/",
-  UPDATE_PSEUDO: "/api/auth/",
+  UPDATE_PSEUDO: "/api/auth/modifyPseudo",
   UPDATE_PASSWORD: "/api/auth/passwordChange",
   DELETE_USER: "/api/auth/deleteUser",
 };

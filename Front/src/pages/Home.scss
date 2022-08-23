@@ -102,6 +102,11 @@ h1{
 }
 
 .message-post>img{
-  width: 100%;
+  max-width: 100%;
   height:auto;
+}
+
+.delete-icon{
+  cursor: pointer;
+  margin-left: 25px;
 }

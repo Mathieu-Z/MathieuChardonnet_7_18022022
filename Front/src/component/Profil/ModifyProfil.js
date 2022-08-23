@@ -113,8 +113,8 @@ function ModifyProfil() {
             </label>
             <br />
             <input
+              name="password"
               className="form-input"
-              defaultValue={infoUser.password}
               type="password"
               {...register("password", {
                 pattern: {
@@ -125,13 +125,13 @@ function ModifyProfil() {
             />
             <br />
 
-            <label htmlFor="password" className="password-label">
+            <label htmlFor="newPassword" className="password-label">
               Nouveau mot de passe:
             </label>
             <br />
             <input
+              name="newPassword"
               className="form-input"
-              defaultValue={infoUser.newPassword}
               type="password"
               {...register("password", {
                 pattern: {

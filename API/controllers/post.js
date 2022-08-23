@@ -5,7 +5,7 @@ const fs = require('fs');
 
 // publier un post (POST)
 exports.createPost = async (req, res, next) => {
-  console.log(req);
+  //console.log(req);
   try {
     const user = await User.findOne({
       attributes: ["pseudo", "id"],
@@ -13,19 +13,16 @@ exports.createPost = async (req, res, next) => {
       order: [["createdAt", "DESC"]],
     })
     if (user !== null) {
-      console.log("user :", user)
-      /*if (req.file) {
-        console.log("filename", req.file.filename)*/
-        console.log(req.file);
-        console.log(req.body.imageUrl);
-        imageUrl = `${req.body.imageUrl}`
-      /*} else {
+      if (req.file) {
+        console.log("filename", req.file.filename)
+        imageUrl = `${req.file.filename}`
+      } else {
         imageUrl = null
-      }*/
+      }
       const post = await Post.create({
         userId: req.body.userId,
         content: req.body.content,
-        imageUrl: req.body.imageUrl,
+        imageUrl: imageUrl,
       })
       post.dataValues.user = user.dataValues
       console.log("Post créé :", post.dataValues)
@@ -52,8 +49,11 @@ exports.getAllPosts = async (req, res, next) => {
       ]
     })
     .then(posts =>{
-      res.json(posts);
-    })
+      posts.map(post => {
+        if( post.imageUrl) post.imageUrl = `http://localhost:4200/images/${post.imageUrl}`
+        });
+        res.json(posts)
+      })
   } catch (error) {
     return res.status(500).send({
       error: "Une erreur est survenue lors de la récupération des posts ",

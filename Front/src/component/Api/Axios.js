@@ -31,6 +31,22 @@ export const POST = async (url, data = null, queryParams = null, moreHeaders = n
   return await Axios.post(url, data, headers);
 };
 
+export const POSTFILE = async (url, data = null) => {
+  console.log(data);
+  const api = Axios.create({ baseURL: "http://localhost:4200/"});
+
+  api.interceptors.request.use(async config => {
+    const token = localStorage.getItem('Token');
+    if (token)
+      config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  });
+  api.defaults.headers.post["Content-Type"] = "multipart/form-data"
+
+  return api.post(url, data);
+  
+};
+
 export const DELETE = async (url, queryParams = null) => {
   return await Axios.delete(url, { ...setRequestConfig(queryParams) });
 };

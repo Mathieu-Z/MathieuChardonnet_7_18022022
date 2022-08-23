@@ -44,9 +44,9 @@ function Feed() {
     if(user.isAdmin === 1){
       const data = posts.filter(post => post.id !== id);
       DELETE(ENDPOINTS.DELETE_POST_ADMIN.replace(':id', data.postId), {
-        userId: data.userId,
+        //userId: data.userId,
         postId: data.postId,
-        content: data.commentMessage,
+        //content: data.commentMessage,
       })
       .then (resDelete => {
         if (resDelete.status === 500) {
@@ -61,14 +61,16 @@ function Feed() {
         }
       })
       .catch (error => {
+
       });
 
     } if (user.id === posts.userId) {
-      const data = posts.filter(post => post.id !== id);
-      DELETE(ENDPOINTS.DELETE_POST.replace(':id', data.postId), {
-        userId: data.userId,
-        postId: data.postId,
-        content: data.commentMessage,
+      const data = posts.filter(post => post.postId !== id);
+      console.log(data);
+      DELETE(ENDPOINTS.DELETE_POST.replace(':id', id), {
+        //userId: data.userId,
+        //postId: data.postId,
+        //content: data.commentMessage,
       })
       .then (resDelete => {
         if (resDelete.status === 500) {
@@ -108,6 +110,5 @@ function Feed() {
     </main>
   );
 };
-
 
 export default Feed;
