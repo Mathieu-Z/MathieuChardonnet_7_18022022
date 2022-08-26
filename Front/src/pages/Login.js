@@ -43,7 +43,6 @@ export default function FormLogin() {
         let user = JSON.stringify(response.data)
         let pseudo = response.data.pseudo
         let isAdmin = response.data.isAdmin
-        console.log(token + user)
         localStorage.setItem("Token", token)
         localStorage.setItem("user", user)
         localStorage.setItem("pseudo", pseudo)

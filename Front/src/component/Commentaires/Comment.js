@@ -21,7 +21,6 @@ function Comments({ comments }) {
   async function deleteComment(id) {
     if (userAdmin === 1){
       DELETE(ENDPOINTS.DELETE_COMMENT_ADMIN.replace(':id', id), {})
-      console.log("ici")
       .then (response => {
         if (response.status === 400) {
           setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");

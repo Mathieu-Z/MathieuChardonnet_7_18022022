@@ -23,7 +23,6 @@ export const GET = async (url, queryParams = null) => {
 };
 
 export const POST = async (url, data = null, queryParams = null, moreHeaders = null) => {
-  console.log(data);
   let headers = { ...setRequestConfig(queryParams) };
   if(moreHeaders){
     headers.push(moreHeaders)
@@ -32,7 +31,6 @@ export const POST = async (url, data = null, queryParams = null, moreHeaders = n
 };
 
 export const POSTFILE = async (url, data = null) => {
-  console.log(data);
   const api = Axios.create({ baseURL: "http://localhost:4200/"});
 
   api.interceptors.request.use(async config => {
