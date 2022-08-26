@@ -18,11 +18,10 @@ function Comments({ comments }) {
   const userId = JSON.parse(user).userId
   const userAdmin = JSON.parse(user).isAdmin
 
-  console.log(JSON.parse(user).isAdmin)
-
   async function deleteComment(id) {
-    if (user.isAdmin === 1){
+    if (userAdmin === 1){
       DELETE(ENDPOINTS.DELETE_COMMENT_ADMIN.replace(':id', id), {})
+      console.log("ici")
       .then (response => {
         if (response.status === 400) {
           setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
@@ -39,7 +38,6 @@ function Comments({ comments }) {
     } if (userId === comments.userId){
       DELETE(ENDPOINTS.DELETE_COMMENT.replace(':id', id), {})
       .then (response => {
-        console.log(response)
         if (response.status === 400) {
           setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
         }

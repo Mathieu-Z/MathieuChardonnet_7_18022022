@@ -11,6 +11,7 @@ function Feed() {
   const Token = localStorage.getItem("Token")
   const user = localStorage.getItem('user')
   const userId = JSON.parse(user).id
+  const userAdmin = JSON.parse(user).isAdmin
   const [, setErrorData] = useState("")
 
   async function loadPosts() {
@@ -36,10 +37,8 @@ function Feed() {
     window.location.reload()
   };
 
-  console.log(user.isAdmin)
-
   function deletePost(id){
-    if(user.isAdmin === 1){
+    if(userAdmin === 1){
       DELETE(ENDPOINTS.DELETE_POST_ADMIN.replace(':id', id), {
       })
       .then (resDelete => {

@@ -42,10 +42,12 @@ export default function FormLogin() {
         let token = response.data.token
         let user = JSON.stringify(response.data)
         let pseudo = response.data.pseudo
+        let isAdmin = response.data.isAdmin
         console.log(token + user)
         localStorage.setItem("Token", token)
         localStorage.setItem("user", user)
         localStorage.setItem("pseudo", pseudo)
+        localStorage.setItem("isAdmin", isAdmin)
         localStorage.getItem("user", user, "token", token)
         navigate("/home")
       }
