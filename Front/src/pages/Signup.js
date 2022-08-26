@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function SignUp() {
-  // useState
+
   const [errorData, setErrorData] = useState("")
 
   // gestion du formulaire avec useForm

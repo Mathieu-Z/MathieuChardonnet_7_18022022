@@ -14,9 +14,7 @@ function Feed() {
   const [, setErrorData] = useState("")
 
   async function loadPosts() {
-    GET(ENDPOINTS.GET_ALL_POSTS, {
-
-    })
+    GET(ENDPOINTS.GET_ALL_POSTS, {})
     .then (resPost => {
       setPosts(resPost.data);
       if (resPost.status === 400) {
@@ -27,7 +25,6 @@ function Feed() {
       }
     })
     .catch (error => {
-
     });
   }
 
@@ -39,14 +36,11 @@ function Feed() {
     window.location.reload()
   };
 
-  function deletePost(id){
+  console.log(user.isAdmin)
 
+  function deletePost(id){
     if(user.isAdmin === 1){
-      const data = posts.filter(post => post.id !== id);
-      DELETE(ENDPOINTS.DELETE_POST_ADMIN.replace(':id', data.postId), {
-        //userId: data.userId,
-        postId: data.postId,
-        //content: data.commentMessage,
+      DELETE(ENDPOINTS.DELETE_POST_ADMIN.replace(':id', id), {
       })
       .then (resDelete => {
         if (resDelete.status === 500) {
@@ -61,16 +55,10 @@ function Feed() {
         }
       })
       .catch (error => {
-
       });
 
     } if (user.id === posts.userId) {
-      const data = posts.filter(post => post.postId !== id);
-      console.log(data);
       DELETE(ENDPOINTS.DELETE_POST.replace(':id', id), {
-        //userId: data.userId,
-        //postId: data.postId,
-        //content: data.commentMessage,
       })
       .then (resDelete => {
         if (resDelete.status === 500) {

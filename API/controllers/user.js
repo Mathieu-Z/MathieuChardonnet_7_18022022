@@ -13,7 +13,6 @@ exports.signup = async (req, res, next) => {
   }
   try {
     const user = await User.create(userInfo)
-    console.log("Utilisateur créé !", userInfo)
     res.status(200).json({
       id: user.id,
       pseudo: user.pseudo,
@@ -94,10 +93,8 @@ exports.modifyPassword = async (req, res, next) => {
 exports.modifyPseudo = async (req, res, next) => {
   try {
     const user = await User.findOne({ id: req.params.id })
-    console.log("User trouvé : ", user.dataValues)
     if (req.body.pseudo) {
       user.pseudo = req.body.pseudo
-      console.log("Ancien pseudo : ", user.pseudo)
     }
     try {
       user.save({})

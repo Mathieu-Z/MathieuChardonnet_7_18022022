@@ -55,7 +55,7 @@ function ModifyProfil() {
       }
       if (resPseudo.status === 200) {
         (window.confirm("Votre pseudo a bien été modifé !"))
-        //window.location.reload()
+        window.location.reload()
       }
     })
     .catch (error => {
@@ -130,10 +130,11 @@ function ModifyProfil() {
             </label>
             <br />
             <input
+              id="newPassword"
               name="newPassword"
               className="form-input"
               type="password"
-              {...register("password", {
+              {...register("newPassword", {
                 pattern: {
                   value: /^((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.!@#$%^&*]).{6,64})$/,
                   message: "Vous devez entrer un mot de passe valide. Votre mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial",

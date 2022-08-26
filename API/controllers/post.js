@@ -5,7 +5,6 @@ const fs = require('fs');
 
 // publier un post (POST)
 exports.createPost = async (req, res, next) => {
-  //console.log(req);
   try {
     const user = await User.findOne({
       attributes: ["pseudo", "id"],
@@ -25,7 +24,6 @@ exports.createPost = async (req, res, next) => {
         imageUrl: imageUrl,
       })
       post.dataValues.user = user.dataValues
-      console.log("Post créé :", post.dataValues)
       res.status(201).json({post: post})
     } else {
       res.status(400).json({réponse: "L'utilisateur n'existe pas"})
@@ -44,7 +42,7 @@ exports.getAllPosts = async (req, res, next) => {
       include: [
         {
           model: User,
-          attributes: ["pseudo", "id"],
+          attributes: ["pseudo", "id", "isAdmin"],
         }
       ]
     })
@@ -72,13 +70,11 @@ exports.getOnePost = async (req, res, next) => {
 exports.modifyPost = async (req, res, next) => {
   try {  
     const post = await Post.findOne({id: req.params.id})
-    console.log("Post trouvé : ", post.dataValues)
     if (req.body.content) {
       post.content = req.body.content
     }
     try {
       post.save({})
-      console.log("New postInfo : ", post)
       res.status(200).json({
         post: post,
         messageRetour: "Votre post à bien été modifié",
@@ -97,10 +93,8 @@ exports.modifyPost = async (req, res, next) => {
 exports.deletePost = async (req, res, next) => {
   try {
     const post = await Post.findOne({where: {id: req.params.id}})
-    console.log("Post trouvé :", post)
     if (post.imageUrl) {
       const filename = post.imageUrl.split("/images")[0]
-      console.log("Filename to Delete", filename)
       fs.unlink(`images/${filename}`, function(error) {
         if(error){
           throw error;

@@ -18,13 +18,14 @@ function PostFeed({ post, deletePost }) {
   const [dataComment, setDataComment] = useState([])
   const [showComments, setshowComments] = useState(false)
   const [showLikes, setShowLikes] = useState(false)
-  const [data, setErrorData] = useState("")
+  const [, setErrorData] = useState("")
 
   const addComment = newComment => {
     setDataComment(prevState => {
       return [...prevState, newComment]
     })
   }
+  
   const deleteComment = commentDelete => {
     let updateComment = dataComment.filter(i => i.id !== commentDelete.id)
     setDataComment(updateComment)
@@ -46,7 +47,6 @@ function PostFeed({ post, deletePost }) {
       }
       if (resComments.status === 200) {
         setErrorData("Commentaires chargés!")
-        console.log(resComments.data);
         setDataComment(resComments.data)
         setshowComments(resComments.data.length > 0)
       }
@@ -57,34 +57,13 @@ function PostFeed({ post, deletePost }) {
 
   useEffect(() => {
     loadComments();
-    //console.log(post.userId, userId, userAdmin);
       if (post.userId == userId || userAdmin) {
         setDeleteIconTrash(true)
       }
-  },[post.userId, userId, userAdmin]
+    },[post.userId, userId, userAdmin]
   );
 
-  // like post
-  function likeHandle() {
-    let test = ENDPOINTS.LIKE_UNLINKE.replace(':idPost', post.id)
-    //console.log(test.replace(':id', post.userId))
-    GET(test.replace(':id', post.userId), {
-
-    })
-    .then (res => {
-      if (res.status === 404) {
-        setErrorData("Likes pas fonctionnel!")
-      }
-      if (res.status === 200) {
-        //window.location.reload();
-        setErrorData("Likes!")
-      }
-    })
-    .catch (error => {
-    })
-  }
-
-  // get likes
+  // get length likes
   function loadLikes() {
     GET(ENDPOINTS.GET_LIKES.replace(':id', post.id) , {
 
@@ -102,10 +81,8 @@ function PostFeed({ post, deletePost }) {
     })
   }
 
+  //create likes
   function postLikes() {
-    /*const response = POST(ENDPOINTS.GET_LIKES.replace(':id', post.id) , {
-
-    })*/
     POST(ENDPOINTS.CREATE_LIKES, {
       userId: userId,
       postId: post.id,
@@ -120,7 +97,6 @@ function PostFeed({ post, deletePost }) {
       }
     })
     .catch (error => {
-
     })
   }
   
@@ -160,8 +136,11 @@ function PostFeed({ post, deletePost }) {
           </span>
         </div>
 
-        <div className="all-comments"><MessageIcon className="icon-message" />
-          <span className="p-comments">Commenter</span>
+        <div className="all-comments">
+          <div className="comments-index">
+            <MessageIcon className="icon-message" />
+            <span className="p-comments">Commentaires</span>
+          </div>
           {showComments && dataComment.map((comments, i) => (
             <Comments className="comments"
               comments={comments}

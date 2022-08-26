@@ -14,7 +14,7 @@ function PostCreate(props) {
   } = useForm()
 
   const [emptyMessage, setEmptyMesssage] = useState(null)
-  const [data, setErrorData] = useState("")
+  const [, setErrorData] = useState("")
   const [file, setFile] = useState(false)
   const [postImage, setPostImage] = useState(null)
 
@@ -27,51 +27,46 @@ function PostCreate(props) {
     const userId = JSON.parse(localStorage.getItem("user")).userId
     if (content.text_content || file) {
       setEmptyMesssage(false)
-    } else {
-      
-    }
-    // POST
-    if (file) {
-      let data2 = new FormData()
-      data2.append("userId", userId)
-      data2.append("content", content.text_content)
-      data2.append("image", file)
-      POSTFILE(ENDPOINTS.CREATE_POST, data2)
-      /*POST(ENDPOINTS.CREATE_POST, {
-        userId: userId,
-        content: content.text_content,
-        imageUrl: file,
-      },{},{"Content-Type": "multipart/form-data"})*/
-      .then (response => {
-        if (response.status === 400) {
-          setErrorData("Post non créé!")
-        }
-        if (response.status === 201) {
-          setErrorData("Post créé!")
-          window.location.reload()
-        }
-      })
-      .catch (error => {
 
-      });
-    } else {
-      POST(ENDPOINTS.CREATE_POST, {
-        userId: userId,
-        content: content.text_content,
-        imageUrl: null,
-      },{})
-      .then (response => {
-        if (response.status === 400) {
-          setErrorData("Post non créé!")
-        }
-        if (response.status === 201) {
-          setErrorData("Post créé!")
-          window.location.reload()
-        }
-      })
-      .catch (error => {
+      // POST
+      if (file) {
+        let data2 = new FormData()
+        data2.append("userId", userId)
+        data2.append("content", content.text_content)
+        data2.append("image", file)
+        POSTFILE(ENDPOINTS.CREATE_POST, data2)
 
-      });
+        .then (response => {
+          if (response.status === 400) {
+            setErrorData("Post non créé!")
+          }
+          if (response.status === 201) {
+            setErrorData("Post créé!")
+            window.location.reload()
+          }
+        })
+        .catch (error => {
+        });
+      } else {
+        POST(ENDPOINTS.CREATE_POST, {
+          userId: userId,
+          content: content.text_content,
+          imageUrl: null,
+        },{})
+        .then (response => {
+          if (response.status === 400) {
+            setErrorData("Post non créé!")
+          }
+          if (response.status === 201) {
+            setErrorData("Post créé!")
+            window.location.reload()
+          }
+        })
+        .catch (error => {
+        });
+      }
+    } else {
+      setEmptyMesssage(true)
     }
   }
 

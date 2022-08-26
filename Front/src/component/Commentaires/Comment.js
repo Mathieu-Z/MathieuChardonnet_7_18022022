@@ -9,49 +9,43 @@ require("dayjs/locale/fr")
 const relativeTime = require("dayjs/plugin/relativeTime")
 dayjs.extend(relativeTime)
 
-function Comments({ comments, commentDelete }) {
-
-  console.log(comments);
+function Comments({ comments }) {
 
   const [DeleteIconTrash, setDeleteIconTrash] = useState(false)
   const [, setErrorData] = useState("")
 
-  const userInfo = JSON.parse(localStorage.getItem("user"))
-  const userId = userInfo.id
-  const userAdmin = userInfo.isAdmin
+  const user = localStorage.getItem("user")
+  const userId = JSON.parse(user).userId
+  const userAdmin = JSON.parse(user).isAdmin
 
-  useEffect(() => {
-    if (comments.userId === userId || userAdmin === 1) {
-      setDeleteIconTrash(true)
-    }
-  }, [userId, userAdmin])
+  console.log(JSON.parse(user).isAdmin)
 
-  async function deleteComment() {
-    if (userAdmin === 1){
-      DELETE(ENDPOINTS.DELETE_COMMENT_ADMIN.replace(':id', comments.id), {
-        //id: data.comments.id,
-      })
+  async function deleteComment(id) {
+    if (user.isAdmin === 1){
+      DELETE(ENDPOINTS.DELETE_COMMENT_ADMIN.replace(':id', id), {})
       .then (response => {
         if (response.status === 400) {
           setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
         }
         if (response.status === 200) {
           (window.confirm("Votre commentaire à bien été supprimé!"))
+          setErrorData("Commentaire supprimé!");
           window.location.reload()
         }
       })
       .catch (error => {
       });
+  
     } if (userId === comments.userId){
-      DELETE(ENDPOINTS.DELETE_COMMENT.replace(':id', comments.id), {
-        //id: data.comments.id,
-      })
+      DELETE(ENDPOINTS.DELETE_COMMENT.replace(':id', id), {})
       .then (response => {
+        console.log(response)
         if (response.status === 400) {
           setErrorData("Vous n'avez pas les droits de supprimer ce commentaire!");
         }
         if (response.status === 200) {
           (window.confirm("Votre commentaire à bien été supprimé!"))
+          setErrorData("Commentaire supprimé!");
           window.location.reload()
         }
       })
@@ -60,22 +54,30 @@ function Comments({ comments, commentDelete }) {
     }
   }
 
+  useEffect(() => {
+      if (comments.userId === userId || userAdmin) {
+        setDeleteIconTrash(true)
+      }
+    }, [userId, userAdmin]
+  );
+
   return (
     <div className="card-comments">
       <div className="card-comments-header">
-        <p className="author-comments">{comments.userId}</p>
+        <p className="author-comments">{comments.User.pseudo}</p>
       </div>
       <div className="comments-text">
         <p className="comments-text-p">{comments.content}</p>
       </div>
-      <span>
+      <span className="comments-trash">
         {DeleteIconTrash && (
           <DeleteIcon className="delete-icon-comments"
             onClick={() => {
               if (window.confirm("Voulez-vous supprimer ce commentaire ?")) {
                 deleteComment(comments.id)
               }
-            }} />
+            }} 
+          />
         )}
       </span>
     </div>
