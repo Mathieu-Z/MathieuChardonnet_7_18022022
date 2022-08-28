@@ -105,6 +105,7 @@ exports.deletePost = async (req, res, next) => {
       })
     } else {
       Post.destroy({where: {id: post.id}}, {truncate: true})
+      Comment.destroy({where : {postId: req.params.id}})
       res.status(200).json({message: "Post supprimé"})
     }
   } catch (error) {
