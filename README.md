@@ -20,6 +20,6 @@ Dans le dossier API:
 
 npm install
 
-db:migrate
+npm db:migrate
 
 npm start
